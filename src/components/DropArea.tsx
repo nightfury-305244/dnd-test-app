@@ -1,6 +1,8 @@
 import React, { useState, useRef } from "react";
 import { useDrop } from "react-dnd";
-import { DraggableItem } from "../data/icons";
+import { DraggableItem } from "../types";
+import IconItem from "./IconItem";
+import PlateItem from "./PlateItem";
 
 const DropArea = ({
   children,
@@ -12,7 +14,6 @@ const DropArea = ({
   dateOnPlate: string;
 }) => {
   const [droppedItems, setDroppedItems] = useState<DraggableItem[]>([]);
-  const [plate, setPlate] = useState<DraggableItem | null>(null);
   const dropRef = useRef<HTMLDivElement>(null);
 
   const PLATE_SIZE = { width: 100, height: 100 };
@@ -30,25 +31,56 @@ const DropArea = ({
         const x = clientOffset.x - dropAreaRect.left - itemSize.width / 2;
         const y = clientOffset.y - dropAreaRect.top - itemSize.height / 2;
 
-        if (item.type === "plate") {
-          setPlate({ ...item, position: { x, y } });
-        } else {
-          const newItem = { ...item, position: { x, y } };
-          setDroppedItems((currentItems) => [...currentItems, newItem]);
-        }
+        console.log(item.id);
+        setDroppedItems((prevItems) => {
+          console.log(prevItems);
+          const existingPlateIndex = prevItems.findIndex(
+            (di) => di.type === "plate"
+          );
+          const existingDuplicateIndex = prevItems.findIndex(
+            (di) => di.id === item.id
+          );
+          if (item.type === "plate") {
+            if (existingPlateIndex !== -1) {
+              const newItems = [...prevItems];
+              newItems[existingPlateIndex] = { ...item, position: { x, y } };
+              return newItems;
+            } else {
+              return [...prevItems, { ...item, position: { x, y } }];
+            }
+          } else {
+            if (existingDuplicateIndex !== -1) {
+              const newItems = [...prevItems];
+              newItems[existingDuplicateIndex] = { ...item, position: { x, y } };
+              return newItems;
+            } else {
+              return [...prevItems, { ...item, position: { x, y } }];
+            }
+          }
+        });
       }
     },
-    collect: (monitor) => ({
-      isOver: !!monitor.isOver(),
-    }),
   }));
 
-  const deleteAllIcons = () => {
-    setDroppedItems([]);
+
+  const moveItem = (id: string, x: number, y: number) => {
+    setDroppedItems((items) =>
+      items.map((item) =>
+        item.id === id ? { ...item, position: { x, y } } : item
+      )
+    );
   };
 
-  const deletePlate = () => {
-    setPlate(null);
+  const deleteAllIcons = () => {
+    setDroppedItems((prevItems) =>
+      prevItems.filter((item) => item.type !== "icon")
+    );
+  };
+
+  const deleteAllPlates = () => {
+    setDroppedItems((prevItems) =>
+      prevItems.filter((item) => item.type !== "plate")
+    );
   };
 
   drop(dropRef);
@@ -59,50 +91,19 @@ const DropArea = ({
       className="relative w-full h-100 border-dashed border-4 border-gray-400"
     >
       {children}
-      {plate && (
-        <div
-          style={{
-            position: "absolute",
-            left: plate.position.x,
-            top: plate.position.y,
-          }}
-        >
-          <img
-            src={plate.url}
-            alt={`Dropped ${plate.type}`}
-            className="plate-image"
+      {droppedItems.map((item, index) =>
+        item.type === "plate" ? (
+          <PlateItem
+            key={index}
+            item={item}
+            moveItem={moveItem}
+            textOnPlate={textOnPlate}
+            dateOnPlate={dateOnPlate}
           />
-          <span
-            className="plate-text"
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-            }}
-          >
-            {textOnPlate}
-            <br />
-            {dateOnPlate}
-          </span>
-        </div>
+        ) : (
+          <IconItem key={index} item={item} moveItem={moveItem} />
+        )
       )}
-      {droppedItems.map((item, index) => (
-        <div
-          key={index}
-          style={{
-            position: "absolute",
-            left: item.position.x,
-            top: item.position.y,
-          }}
-        >
-          <img
-            src={item.url}
-            alt={`Dropped ${item.type}`}
-            className="icon-image"
-          />
-        </div>
-      ))}
 
       <button
         onClick={deleteAllIcons}
@@ -111,7 +112,7 @@ const DropArea = ({
         Delete Icons
       </button>
       <button
-        onClick={deletePlate}
+        onClick={deleteAllPlates}
         className="absolute top-0 right-0 m-2 p-2 bg-red-500 text-white"
       >
         Delete Plate
