@@ -1,10 +1,10 @@
 import { useDrag } from 'react-dnd';
 import { useRef } from 'react';
-import { IconItem } from '../types';
+import { DraggableItem } from '../types';
 
 type MoveItemFunction = (id: string, x: number, y: number) => void;
 
-const IconItem = ({ item, moveItem }: {item: IconItem, moveItem: MoveItemFunction}) => {
+const IconItem = ({ item, moveItem }: {item: DraggableItem, moveItem: MoveItemFunction}) => {
     const ref = useRef(null);
     const [, drag] = useDrag({
         type: item.type,

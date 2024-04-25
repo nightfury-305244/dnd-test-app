@@ -1,10 +1,10 @@
 import { useRef } from 'react';
 import { useDrag } from 'react-dnd';
-import {PlateItem} from "../types";
+import { DraggableItem } from "../types";
 
 type MoveItemFunction = (id: string, x: number, y: number) => void;
 
-const PlateItem = ({ item, moveItem, textOnPlate, dateOnPlate }: {item: PlateItem, moveItem: MoveItemFunction, textOnPlate: string, dateOnPlate: string}) => {
+const PlateItem = ({ item, moveItem, textOnPlate, dateOnPlate }: {item: DraggableItem, moveItem: MoveItemFunction, textOnPlate: string, dateOnPlate: string}) => {
     const ref = useRef(null);
     const [, drag] = useDrag({
         type: item.type, // 'plate'
