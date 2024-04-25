@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+.plate-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.icon-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+.drop-area {
+  position: relative;
+}
+
+.plate-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  max-width: 90%;
+  overflow: hidden;
+  padding: 5px;
+}
+
+.plate-date {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-size: 12px;
+}
+
