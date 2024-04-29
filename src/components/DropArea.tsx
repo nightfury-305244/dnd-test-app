@@ -3,6 +3,7 @@ import { useDrop } from "react-dnd";
 import { DraggableItem } from "../types";
 import IconItem from "./IconItem";
 import PlateItem from "./PlateItem";
+import { Grid } from "@mui/material";
 
 const DropArea = ({
   children,
@@ -86,8 +87,9 @@ const DropArea = ({
   drop(dropRef);
 
   return (
-    <div
+    <Grid container
       ref={dropRef}
+      justifyContent={"center"}
       className="relative w-full h-100 border-dashed border-4 border-gray-400"
     >
       {children}
@@ -117,7 +119,7 @@ const DropArea = ({
       >
         Delete Plate
       </button>
-    </div>
+    </Grid>
   );
 };
 

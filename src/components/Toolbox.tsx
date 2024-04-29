@@ -1,5 +1,6 @@
 import DraggableItem from "./DraggableItem";
 import { icons, plates } from "../data/icons";
+import { Grid, TextField, Typography } from "@mui/material";
 
 interface ToolboxProps {
   textOnPlate: string;
@@ -15,60 +16,70 @@ const Toolbox: React.FC<ToolboxProps> = ({
   dateOnPlate,
 }) => {
   return (
-    <div className="p-4">
-      <div className="mb-8">
-        <h2 className="text-lg font-bold mb-4">Icons:</h2>
-        <div className="flex flex-wrap justify-start items-center gap-4">
-          {icons.map((icon) => (
-            <DraggableItem
-              key={icon.id}
-              id={icon.id}
-              url={icon.url}
-              type={icon.type}
-            />
-          ))}
-        </div>
-      </div>
-      <div>
-        <h2 className="text-lg font-bold mb-4">Plates:</h2>
-        <div className="flex flex-wrap justify-start items-center gap-4">
-          {plates.map((plate) => (
-            <DraggableItem
-              key={plate.id}
-              id={plate.id}
-              url={plate.url}
-              type={plate.type}
-            />
-          ))}
-        </div>
-      </div>
-      <div>
-        <label htmlFor="textOnPlate" className="font-bold">
-          Text on Plate:
-        </label>
-        <input
-          id="textOnPlate"
-          type="text"
-          value={textOnPlate}
-          onChange={(e) => setTextOnPlate(e.target.value)}
-          placeholder="Enter text for the plate"
-          className="mt-2 p-1 border rounded"
-        />
-      </div>
-      <div>
-        <label htmlFor="dateOnPlate" className="font-bold">
-          Text on Date:
-        </label>
-        <input
-          id="dateOnPlate"
-          type="date"
-          value={dateOnPlate}
-          onChange={(e) => setDateOnPlate(e.target.value)}
-          placeholder="Enter text for the plate"
-          className="mt-2 p-1 border rounded"
-        />
-      </div>
-    </div>
+    <Grid container direction={"column"} spacing={3} className="py-8">
+      <Grid item container direction={"column"} alignItems={"center"} spacing={2}>
+        <Grid item>
+          <Typography variant="h6" className="text-lg font-bold mb-4">
+            Icons
+          </Typography>
+        </Grid>
+        <Grid item>
+          <div className="flex flex-wrap justify-start items-center gap-4">
+            {icons.map((icon) => (
+              <DraggableItem
+                key={icon.id}
+                id={icon.id}
+                url={icon.url}
+                type={icon.type}
+              />
+            ))}
+          </div>
+        </Grid>
+      </Grid>
+      <Grid item container direction={"column"} alignItems={"center"} spacing={2}>
+        <Grid item>
+          <Typography variant="h6" className="text-lg font-bold mb-4">
+            Plates
+          </Typography>
+        </Grid>
+        <Grid item>
+          <div className="flex flex-wrap justify-start items-center gap-4">
+            {plates.map((plate) => (
+              <DraggableItem
+                key={plate.id}
+                id={plate.id}
+                url={plate.url}
+                type={plate.type}
+              />
+            ))}
+          </div>
+        </Grid>
+      </Grid>
+      <Grid
+        item
+        container
+        direction={"column"}
+        alignItems={"center"}
+        spacing={3}
+      >
+        <Grid item>
+          <TextField
+            label="Text on Plate"
+            value={textOnPlate}
+            onChange={(e) => setTextOnPlate(e.target.value)}
+            placeholder="Enter text for the plate"
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            value={dateOnPlate}
+            type="date"
+            onChange={(e) => setDateOnPlate(e.target.value)}
+            placeholder="Enter Date for the plate"
+          />
+        </Grid>
+      </Grid>
+    </Grid>
   );
 };
 
