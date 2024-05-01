@@ -1,20 +1,25 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import { useDrop } from "react-dnd";
-import { DraggableItem } from "../types";
+import { DraggableItem } from "../../types";
 import IconItem from "./IconItem";
 import PlateItem from "./PlateItem";
-import { Grid } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 
-const DropArea = ({
-  children,
-  textOnPlate,
-  dateOnPlate,
-}: {
+interface DropAreaProps {
   children: React.ReactNode;
   textOnPlate: string;
   dateOnPlate: string;
+  droppedItems: DraggableItem[];
+  setDroppedItems: React.Dispatch<React.SetStateAction<DraggableItem[]>>;
+}
+
+const DropArea: React.FC<DropAreaProps> = ({
+  children,
+  textOnPlate,
+  dateOnPlate,
+  droppedItems,
+  setDroppedItems,
 }) => {
-  const [droppedItems, setDroppedItems] = useState<DraggableItem[]>([]);
   const dropRef = useRef<HTMLDivElement>(null);
 
   const PLATE_SIZE = { width: 100, height: 100 };
@@ -52,7 +57,10 @@ const DropArea = ({
           } else {
             if (existingDuplicateIndex !== -1) {
               const newItems = [...prevItems];
-              newItems[existingDuplicateIndex] = { ...item, position: { x, y } };
+              newItems[existingDuplicateIndex] = {
+                ...item,
+                position: { x, y },
+              };
               return newItems;
             } else {
               return [...prevItems, { ...item, position: { x, y } }];
@@ -62,7 +70,6 @@ const DropArea = ({
       }
     },
   }));
-
 
   const moveItem = (id: string, x: number, y: number) => {
     setDroppedItems((items) =>
@@ -87,38 +94,47 @@ const DropArea = ({
   drop(dropRef);
 
   return (
-    <Grid container
-      ref={dropRef}
-      justifyContent={"center"}
-      className="relative w-full h-100 border-dashed border-4 border-gray-400"
-    >
-      {children}
-      {droppedItems.map((item, index) =>
-        item.type === "plate" ? (
-          <PlateItem
-            key={index}
-            item={item}
-            moveItem={moveItem}
-            textOnPlate={textOnPlate}
-            dateOnPlate={dateOnPlate}
-          />
-        ) : (
-          <IconItem key={index} item={item} moveItem={moveItem} />
-        )
-      )}
-
-      <button
-        onClick={deleteAllIcons}
-        className="absolute top-0 left-0 m-2 p-2 bg-red-500 text-white"
-      >
-        Delete Icons
-      </button>
-      <button
-        onClick={deleteAllPlates}
-        className="absolute top-0 right-0 m-2 p-2 bg-red-500 text-white"
-      >
-        Delete Plate
-      </button>
+    <Grid container direction={"row"} justifyContent={"center"} spacing={3}>
+      <Grid item>
+        <Box ref={dropRef} className="relative dropArea-size text-center">
+          {children}
+          {droppedItems.map((item, index) =>
+            item.type === "plate" ? (
+              <PlateItem
+                key={index}
+                item={item}
+                moveItem={moveItem}
+                textOnPlate={textOnPlate}
+                dateOnPlate={dateOnPlate}
+              />
+            ) : (
+              <IconItem key={index} item={item} moveItem={moveItem} />
+            )
+          )}
+        </Box>
+      </Grid>
+      <Grid item container spacing={3} justifyContent={"center"}>
+        <Grid item>
+          <Button
+            variant="outlined"
+            size="small"
+            color="error"
+            onClick={deleteAllIcons}
+          >
+            Delete Icons
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            variant="outlined"
+            size="small"
+            color="error"
+            onClick={deleteAllPlates}
+          >
+            Delete Plate
+          </Button>
+        </Grid>
+      </Grid>
     </Grid>
   );
 };

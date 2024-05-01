@@ -19,8 +19,8 @@ const DraggableItem = ({
 
   const className =
     type === "icon"
-      ? "icon-image cursor-grab hover:cursor-grabbing w-20 h-20 object-cover rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
-      : "plate-image cursor-grab hover:cursor-grabbing w-20 h-20 object-cover rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300";
+      ? "icon-image mx-2 cursor-grab hover:cursor-grabbing w-30 h-30 object-cover rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+      : "plate-image mx-2 cursor-grab hover:cursor-grabbing w-30 h-30 object-cover rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300";
 
   return (
     <img ref={drag} src={url} alt={`Draggable ${type}`} className={className} />
