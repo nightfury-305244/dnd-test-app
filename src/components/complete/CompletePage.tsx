@@ -5,7 +5,6 @@ interface CompletePageProps {
 }
 
 const CompletePage: React.FC<CompletePageProps> = ({ onNavigateReturn }) => {
-
   return (
     <Grid
       container

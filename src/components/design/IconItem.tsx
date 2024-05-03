@@ -1,6 +1,6 @@
 import { useDrag } from "react-dnd";
 import { useRef } from "react";
-import { DraggableItem } from "../../types";
+import { DraggableItem } from "../../types/types";
 
 type MoveItemFunction = (id: string, x: number, y: number) => void;
 
@@ -23,7 +23,7 @@ const IconItem = ({
       if (delta) {
         const x = Math.round(item.position.x + delta.x);
         const y = Math.round(item.position.y + delta.y);
-        moveItem(item.id, x, y);
+        moveItem(item._id, x, y);
       }
     },
   });

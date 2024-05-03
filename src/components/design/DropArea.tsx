@@ -1,9 +1,10 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDrop } from "react-dnd";
-import { DraggableItem } from "../../types";
+import { DraggableItem } from "../../types/types";
 import IconItem from "./IconItem";
 import PlateItem from "./PlateItem";
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
+import useLocalStorage from "../../store/useLocalStorage";
 
 interface DropAreaProps {
   children: React.ReactNode;
@@ -11,6 +12,7 @@ interface DropAreaProps {
   dateOnPlate: string;
   droppedItems: DraggableItem[];
   setDroppedItems: React.Dispatch<React.SetStateAction<DraggableItem[]>>;
+  initialShirtPrice: number; // Pass the initial shirt price as a prop
 }
 
 const DropArea: React.FC<DropAreaProps> = ({
@@ -19,11 +21,24 @@ const DropArea: React.FC<DropAreaProps> = ({
   dateOnPlate,
   droppedItems,
   setDroppedItems,
+  initialShirtPrice
 }) => {
   const dropRef = useRef<HTMLDivElement>(null);
-
   const PLATE_SIZE = { width: 100, height: 100 };
   const ICON_SIZE = { width: 50, height: 50 };
+  const [currentPrice, setCurrentPrice] = useLocalStorage<number>("currentPrice");
+  const [price, setPrice] = useState<number>(currentPrice || initialShirtPrice);
+
+  useEffect(() => {
+    if (droppedItems.length > 0) {
+      const newPrice = droppedItems.reduce((acc, item) => acc + item.price, initialShirtPrice);
+      setPrice(newPrice);
+      setCurrentPrice(newPrice);
+    } else {
+      setPrice(initialShirtPrice);
+      setCurrentPrice(initialShirtPrice);
+    }
+  }, [droppedItems, setCurrentPrice, initialShirtPrice]);
 
   const [, drop] = useDrop(() => ({
     accept: ["icon", "plate"],
@@ -31,68 +46,38 @@ const DropArea: React.FC<DropAreaProps> = ({
       const clientOffset = monitor.getClientOffset();
       if (clientOffset && dropRef.current) {
         const dropAreaRect = dropRef.current.getBoundingClientRect();
-
         let itemSize = item.type === "plate" ? PLATE_SIZE : ICON_SIZE;
-
         const x = clientOffset.x - dropAreaRect.left - itemSize.width / 2;
         const y = clientOffset.y - dropAreaRect.top - itemSize.height / 2;
 
-        console.log(item.id);
         setDroppedItems((prevItems) => {
-          console.log(prevItems);
-          const existingPlateIndex = prevItems.findIndex(
-            (di) => di.type === "plate"
-          );
-          const existingDuplicateIndex = prevItems.findIndex(
-            (di) => di.id === item.id
-          );
+          const existingIndex = prevItems.findIndex(di => di._id === item._id && di.type === item.type);
+  
           if (item.type === "plate") {
-            if (existingPlateIndex !== -1) {
-              const newItems = [...prevItems];
-              newItems[existingPlateIndex] = { ...item, position: { x, y } };
-              return newItems;
-            } else {
-              return [...prevItems, { ...item, position: { x, y } }];
-            }
+            const filteredItems = prevItems.filter(di => di.type !== "plate");
+            return [...filteredItems, { ...item, position: { x, y } }];
           } else {
-            if (existingDuplicateIndex !== -1) {
-              const newItems = [...prevItems];
-              newItems[existingDuplicateIndex] = {
-                ...item,
-                position: { x, y },
-              };
-              return newItems;
+            if (existingIndex !== -1) {
+              return prevItems.map(di => di._id === item._id ? { ...di, position: { x, y } } : di);
             } else {
               return [...prevItems, { ...item, position: { x, y } }];
             }
           }
-        });
+        });      
       }
     },
   }));
 
-  const moveItem = (id: string, x: number, y: number) => {
-    setDroppedItems((items) =>
-      items.map((item) =>
-        item.id === id ? { ...item, position: { x, y } } : item
+  drop(dropRef);
+
+  const moveItem = (itemId: string, x: number, y: number) => {
+    setDroppedItems((prevItems) =>
+      prevItems.map((item) =>
+        item._id === itemId ? { ...item, position: { x, y } } : item
       )
     );
   };
-
-  const deleteAllIcons = () => {
-    setDroppedItems((prevItems) =>
-      prevItems.filter((item) => item.type !== "icon")
-    );
-  };
-
-  const deleteAllPlates = () => {
-    setDroppedItems((prevItems) =>
-      prevItems.filter((item) => item.type !== "plate")
-    );
-  };
-
-  drop(dropRef);
-
+  
   return (
     <Grid container direction={"row"} justifyContent={"center"} spacing={3}>
       <Grid item>
@@ -114,26 +99,11 @@ const DropArea: React.FC<DropAreaProps> = ({
         </Box>
       </Grid>
       <Grid item container spacing={3} justifyContent={"center"}>
-        <Grid item>
-          <Button
-            variant="outlined"
-            size="small"
-            color="error"
-            onClick={deleteAllIcons}
-          >
-            Delete Icons
-          </Button>
-        </Grid>
-        <Grid item>
-          <Button
-            variant="outlined"
-            size="small"
-            color="error"
-            onClick={deleteAllPlates}
-          >
-            Delete Plate
-          </Button>
-        </Grid>
+        <Button variant="outlined" size="small" color="error" onClick={() => setDroppedItems(prev => prev.filter(item => item.type !== "icon"))}>Delete Icons</Button>
+        <Button variant="outlined" size="small" color="error" onClick={() => setDroppedItems(prev => prev.filter(item => item.type !== "plate"))}>Delete Plate</Button>
+      </Grid>
+      <Grid item>
+        <Typography variant="body1">Current Price: {price}</Typography>
       </Grid>
     </Grid>
   );

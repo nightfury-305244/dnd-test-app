@@ -1,17 +1,19 @@
 import { useDrag } from "react-dnd";
 
 const DraggableItem = ({
-  id,
+  _id,
   url,
   type,
+  price
 }: {
-  id: string;
+  _id: string;
   url: string;
   type: string;
+  price: number;
 }) => {
   const [{ }, drag] = useDrag(() => ({
     type: type,
-    item: { id, type, url },
+    item: { _id, type, url, price },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),

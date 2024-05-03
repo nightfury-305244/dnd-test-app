@@ -1,12 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
-import designReducer from '../features/designSlice';
+import symbolReducer from '../features/symbols/symbolsSlice';
+import shirtsReducer from '../features/shirts/shirtsSlice';
+import orderReducer from '../features/order/orderSlice';
+import { useDispatch } from 'react-redux';
 
 export const store = configureStore({
   reducer: {
-    design: designReducer,
+    symbols: symbolReducer,
+    shirts: shirtsReducer,
+    order: orderReducer
   },
 });
 
-// Type definitions for RootState and AppDispatch
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+
+export const useAppDispatch = () => useDispatch<AppDispatch>();

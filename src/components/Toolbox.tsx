@@ -1,6 +1,6 @@
 import DraggableItem from "./DraggableItem";
-import { icons, plates } from "../data/icons";
 import { Grid, TextField, Typography } from "@mui/material";
+import { useAppSelector } from "../hooks";
 
 interface ToolboxProps {
   textOnPlate: string;
@@ -15,6 +15,11 @@ const Toolbox: React.FC<ToolboxProps> = ({
   setDateOnPlate,
   dateOnPlate,
 }) => {
+
+  const symbols = useAppSelector(state => state.symbols.items);
+  const icons = symbols.filter(symbol => symbol.type === 1);
+  const plates = symbols.filter(symbol => symbol.type === 2);
+
   return (
     <Grid container direction={"column"} spacing={3} className="py-8">
       <Grid item container direction={"column"} alignItems={"center"} spacing={2}>
@@ -27,10 +32,11 @@ const Toolbox: React.FC<ToolboxProps> = ({
           <div className="flex flex-wrap justify-start items-center gap-4">
             {icons.map((icon) => (
               <DraggableItem
-                key={icon.id}
-                id={icon.id}
+                key={icon._id}
+                _id={icon._id}
                 url={icon.url}
-                type={icon.type}
+                price={icon.price}
+                type={"icon"}
               />
             ))}
           </div>
@@ -46,10 +52,11 @@ const Toolbox: React.FC<ToolboxProps> = ({
           <div className="flex flex-wrap justify-start items-center gap-4">
             {plates.map((plate) => (
               <DraggableItem
-                key={plate.id}
-                id={plate.id}
+                key={plate._id}
+                _id={plate._id}
                 url={plate.url}
-                type={plate.type}
+                price={plate.price}
+                type={"plate"}
               />
             ))}
           </div>

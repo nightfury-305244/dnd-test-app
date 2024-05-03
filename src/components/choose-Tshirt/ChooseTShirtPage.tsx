@@ -1,7 +1,8 @@
 import { Button, Grid, Typography, styled } from "@mui/material";
-import { Shirt, shirts } from "../../data/shirts";
 import { useState } from "react";
 import useLocalStorage from "../../store/useLocalStorage";
+import { useAppSelector } from "../../hooks";
+import { Shirt } from "../../types/apiTypes";
 
 interface ChooseTShirtPageProps {
   onNavigateNext: () => void;
@@ -14,18 +15,22 @@ const SelectedButton = styled(Button)(({ theme }) => ({
 const ChooseTShirtPage: React.FC<ChooseTShirtPageProps> = ({
   onNavigateNext,
 }) => {
+  const shirts = useAppSelector((state) => state.shirts.items);
   const [selectedShirt, setSelectedShirt] =
     useLocalStorage<Shirt>("selectedShirt");
+  const [currentPrice, setCurrentPrice] =
+    useLocalStorage<number>("currentPrice");
   const [selectedShirtId, setSelectedShirtId] = useState<string | null>(
-    selectedShirt ? selectedShirt.id : null
+    selectedShirt ? selectedShirt._id : null
   );
 
   const handleSelectShirt = (shirt: Shirt) => {
     setSelectedShirt(shirt);
-    setSelectedShirtId(shirt.id);
+    setSelectedShirtId(shirt._id);
+    setCurrentPrice(shirt.price);
+    onNavigateNext();
   };
 
-  console.log(selectedShirtId);
   return (
     <Grid
       container
@@ -41,8 +46,8 @@ const ChooseTShirtPage: React.FC<ChooseTShirtPageProps> = ({
       </Grid>
       <Grid container item justifyContent={"center"} spacing={3}>
         {shirts.map((shirt) => (
-          <Grid item key={shirt.id}>
-            {shirt.id === selectedShirtId ? (
+          <Grid item key={shirt._id}>
+            {shirt._id === selectedShirtId ? (
               <SelectedButton
                 onClick={() => handleSelectShirt(shirt)}
                 className="!p-0"
@@ -56,6 +61,7 @@ const ChooseTShirtPage: React.FC<ChooseTShirtPageProps> = ({
             ) : (
               <Button onClick={() => handleSelectShirt(shirt)} className="!p-0">
                 <img
+                  key={shirt._id}
                   src={shirt.url}
                   alt={shirt.alt}
                   className="list-image-size text-center"
@@ -65,9 +71,6 @@ const ChooseTShirtPage: React.FC<ChooseTShirtPageProps> = ({
           </Grid>
         ))}
       </Grid>
-      <Button variant="contained" onClick={onNavigateNext} className="!mt-10">
-        Next
-      </Button>
     </Grid>
   );
 };

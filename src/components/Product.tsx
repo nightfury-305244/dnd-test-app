@@ -1,9 +1,14 @@
 import useLocalStorage from "../store/useLocalStorage";
-import { DraggableItem, Shirt } from "../types";
+import { Shirt } from "../types/apiTypes";
+import { DraggableItem } from "../types/types";
 
 const Product: React.FC = () => {
   const [selectedShirt] = useLocalStorage<Shirt>("selectedShirt");
   const [items] = useLocalStorage<DraggableItem[]>("items");
+  const [fTextOnPlate] = useLocalStorage<string>("fTextOnPlate");
+  const [fDateOnPlate] = useLocalStorage<string>("fDateOnPlate");
+
+
   return (
     <div className="relative dropArea-size text-center">
       <img
@@ -37,9 +42,9 @@ const Product: React.FC = () => {
                 textAlign: "center",
               }}
             >
-              {item.textOnPlate}
+              {fTextOnPlate}
               <br />
-              {item.dateOnPlate}
+              {fDateOnPlate}
             </div>
           </div>
         ) : (

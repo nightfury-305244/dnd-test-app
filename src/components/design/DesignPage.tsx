@@ -3,8 +3,9 @@ import DropArea from "./DropArea";
 import Toolbox from "../Toolbox";
 import { Button, Grid, Typography } from "@mui/material";
 import useLocalStorage from "../../store/useLocalStorage";
-import { Shirt } from "../../data/shirts";
-import { DraggableItem } from "../../types";
+import { DraggableItem } from "../../types/types";
+import { Shirt } from "../../types/apiTypes";
+import { useAppSelector } from "../../hooks";
 
 interface DesignPageProps {
   onNavigateNext: () => void;
@@ -16,17 +17,26 @@ const DesignPage: React.FC<DesignPageProps> = ({
   onNavigatePrevious,
 }) => {
   const [selectedShirt] = useLocalStorage<Shirt>("selectedShirt");
+  const shirts = useAppSelector((state) => state.shirts.items);
 
   const [textOnPlate, setTextOnPlate] = useState("");
   const [dateOnPlate, setDateOnPlate] = useState("");
 
   const [items, setItems] = useLocalStorage<DraggableItem[]>("items");
+  const [fTextOnPlate, setFTextOnPlate] =
+    useLocalStorage<string>("fTextOnPlate");
+  const [fDateOnPlate, setFDateOnPlate] =
+    useLocalStorage<string>("fDateOnPlate");
+  const [currentPrice, setCurrentPrice] = useLocalStorage<number>("currentPrice");
+
   const [droppedItems, setDroppedItems] = useState<DraggableItem[]>(
     items ? items : []
   );
 
   const handleNext = () => {
     setItems(droppedItems);
+    setFTextOnPlate(textOnPlate);
+    setFDateOnPlate(dateOnPlate);
     onNavigateNext();
   };
   return (
@@ -73,6 +83,7 @@ const DesignPage: React.FC<DesignPageProps> = ({
               dateOnPlate={dateOnPlate}
               droppedItems={droppedItems}
               setDroppedItems={setDroppedItems}
+              initialShirtPrice={selectedShirt ? selectedShirt.price : 0}
             >
               <img
                 src={selectedShirt?.url}
@@ -100,3 +111,4 @@ const DesignPage: React.FC<DesignPageProps> = ({
 };
 
 export default DesignPage;
+

@@ -1,7 +1,7 @@
 import { LinearProgress, Typography, Box } from "@mui/material";
 
-const ProgressBar = ({ step }: { step: string }) => {
-  const stepToPercentage = ( currentStep: string ) => {
+const ProgressBar = ({ step }: { step: string | undefined }) => {
+  const stepToPercentage = (currentStep: string | undefined) => {
     switch (currentStep) {
       case "select":
         return 0;
@@ -15,11 +15,15 @@ const ProgressBar = ({ step }: { step: string }) => {
   };
 
   return (
-    <Box sx={{ width: "80%", mt: 10, mb: 3, mx: 'auto' }}>
+    <Box sx={{ width: "80%", mt: 10, mb: 3, mx: "auto" }}>
       <Typography variant="body2" color="text.secondary">
         Step {step}
       </Typography>
-      <LinearProgress color="secondary" variant="determinate" value={stepToPercentage(step)} />
+      <LinearProgress
+        color="secondary"
+        variant="determinate"
+        value={stepToPercentage(step)}
+      />
     </Box>
   );
 };
