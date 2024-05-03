@@ -1,5 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { API_BASE_URL } from "../../constants/apiConstants";
 import { Shirt } from "../../types/apiTypes";
 
 export const getShirts = createAsyncThunk<
@@ -8,7 +7,7 @@ export const getShirts = createAsyncThunk<
   { rejectValue: string }
 >("shirts/getShirts", async (_, { rejectWithValue }) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/shirts`);
+    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/shirts`);
     if (!response.ok) {
       throw new Error("Failed to fetch shirts");
     }

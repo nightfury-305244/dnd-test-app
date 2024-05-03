@@ -18,6 +18,8 @@ function App() {
   const { step } = useParams();
   const dispatch = useAppDispatch();
   
+  console.log(import.meta.env.VITE_API_BASE_URL);
+  
   useEffect(() => {
     dispatch(getSymbols());
     dispatch(getShirts());

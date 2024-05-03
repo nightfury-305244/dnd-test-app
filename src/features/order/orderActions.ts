@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
 import { OrderData, ProductInfo } from '../../types/types';
-import { API_BASE_URL } from '../../constants/apiConstants';
 
 interface OrderRequest {
   subscriberInfo: {
@@ -24,7 +23,7 @@ export const createOrder = createAsyncThunk<OrderData, OrderRequest, { state: Ro
   async (orderRequest, { rejectWithValue }) => {
     const { productInfo, ...orderDetails } = orderRequest;
     try {
-      const productResponse = await fetch(`${API_BASE_URL}/product`, {
+      const productResponse = await fetch(`${import.meta.env.VITE_API_BASE_URL}/product`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -39,7 +38,7 @@ export const createOrder = createAsyncThunk<OrderData, OrderRequest, { state: Ro
 
       const product = await productResponse.json();
 
-      const orderResponse = await fetch(`${API_BASE_URL}/order`, {
+      const orderResponse = await fetch(`${import.meta.env.VITE_API_BASE_URL}/order`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
