@@ -28,6 +28,7 @@ const ChooseTShirtPage: React.FC<ChooseTShirtPageProps> = ({
     setSelectedShirt(shirt);
     setSelectedShirtId(shirt._id);
     setCurrentPrice(shirt.price);
+    console.log(currentPrice);
     onNavigateNext();
   };
 

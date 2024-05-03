@@ -21,17 +21,21 @@ const DropArea: React.FC<DropAreaProps> = ({
   dateOnPlate,
   droppedItems,
   setDroppedItems,
-  initialShirtPrice
+  initialShirtPrice,
 }) => {
   const dropRef = useRef<HTMLDivElement>(null);
   const PLATE_SIZE = { width: 100, height: 100 };
   const ICON_SIZE = { width: 50, height: 50 };
-  const [currentPrice, setCurrentPrice] = useLocalStorage<number>("currentPrice");
+  const [currentPrice, setCurrentPrice] =
+    useLocalStorage<number>("currentPrice");
   const [price, setPrice] = useState<number>(currentPrice || initialShirtPrice);
 
   useEffect(() => {
     if (droppedItems.length > 0) {
-      const newPrice = droppedItems.reduce((acc, item) => acc + item.price, initialShirtPrice);
+      const newPrice = droppedItems.reduce(
+        (acc, item) => acc + item.price,
+        initialShirtPrice
+      );
       setPrice(newPrice);
       setCurrentPrice(newPrice);
     } else {
@@ -51,19 +55,23 @@ const DropArea: React.FC<DropAreaProps> = ({
         const y = clientOffset.y - dropAreaRect.top - itemSize.height / 2;
 
         setDroppedItems((prevItems) => {
-          const existingIndex = prevItems.findIndex(di => di._id === item._id && di.type === item.type);
-  
+          const existingIndex = prevItems.findIndex(
+            (di) => di._id === item._id && di.type === item.type
+          );
+
           if (item.type === "plate") {
-            const filteredItems = prevItems.filter(di => di.type !== "plate");
+            const filteredItems = prevItems.filter((di) => di.type !== "plate");
             return [...filteredItems, { ...item, position: { x, y } }];
           } else {
             if (existingIndex !== -1) {
-              return prevItems.map(di => di._id === item._id ? { ...di, position: { x, y } } : di);
+              return prevItems.map((di) =>
+                di._id === item._id ? { ...di, position: { x, y } } : di
+              );
             } else {
               return [...prevItems, { ...item, position: { x, y } }];
             }
           }
-        });      
+        });
       }
     },
   }));
@@ -77,7 +85,7 @@ const DropArea: React.FC<DropAreaProps> = ({
       )
     );
   };
-  
+
   return (
     <Grid container direction={"row"} justifyContent={"center"} spacing={3}>
       <Grid item>
@@ -99,8 +107,30 @@ const DropArea: React.FC<DropAreaProps> = ({
         </Box>
       </Grid>
       <Grid item container spacing={3} justifyContent={"center"}>
-        <Button variant="outlined" size="small" color="error" onClick={() => setDroppedItems(prev => prev.filter(item => item.type !== "icon"))}>Delete Icons</Button>
-        <Button variant="outlined" size="small" color="error" onClick={() => setDroppedItems(prev => prev.filter(item => item.type !== "plate"))}>Delete Plate</Button>
+        <Button
+          variant="outlined"
+          size="small"
+          color="error"
+          onClick={() =>
+            setDroppedItems((prev) =>
+              prev.filter((item) => item.type !== "icon")
+            )
+          }
+        >
+          Delete Icons
+        </Button>
+        <Button
+          variant="outlined"
+          size="small"
+          color="error"
+          onClick={() =>
+            setDroppedItems((prev) =>
+              prev.filter((item) => item.type !== "plate")
+            )
+          }
+        >
+          Delete Plate
+        </Button>
       </Grid>
       <Grid item>
         <Typography variant="body1">Current Price: {price}</Typography>

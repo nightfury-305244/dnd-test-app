@@ -5,7 +5,6 @@ import { Button, Grid, Typography } from "@mui/material";
 import useLocalStorage from "../../store/useLocalStorage";
 import { DraggableItem } from "../../types/types";
 import { Shirt } from "../../types/apiTypes";
-import { useAppSelector } from "../../hooks";
 
 interface DesignPageProps {
   onNavigateNext: () => void;
@@ -17,7 +16,6 @@ const DesignPage: React.FC<DesignPageProps> = ({
   onNavigatePrevious,
 }) => {
   const [selectedShirt] = useLocalStorage<Shirt>("selectedShirt");
-  const shirts = useAppSelector((state) => state.shirts.items);
 
   const [textOnPlate, setTextOnPlate] = useState("");
   const [dateOnPlate, setDateOnPlate] = useState("");
@@ -27,8 +25,8 @@ const DesignPage: React.FC<DesignPageProps> = ({
     useLocalStorage<string>("fTextOnPlate");
   const [fDateOnPlate, setFDateOnPlate] =
     useLocalStorage<string>("fDateOnPlate");
-  const [currentPrice, setCurrentPrice] = useLocalStorage<number>("currentPrice");
 
+  console.log(fTextOnPlate, fDateOnPlate);
   const [droppedItems, setDroppedItems] = useState<DraggableItem[]>(
     items ? items : []
   );
@@ -111,4 +109,3 @@ const DesignPage: React.FC<DesignPageProps> = ({
 };
 
 export default DesignPage;
-
