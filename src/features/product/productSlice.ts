@@ -1,20 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Product } from '../../types/apiTypes';
-import { getProduct } from './productActions';
+import { getProduct, createProduct } from './productActions';
 
-interface ShirtsState {
+interface ProductState {
   product: Product;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
 }
 
-const initialState: ShirtsState = {
+const initialState: ProductState = {
   product: {},
   status: 'idle',
   error: null
 };
 
-const shirtsSlice = createSlice({
+const productSlice = createSlice({
   name: 'product',
   initialState,
   reducers: {},
@@ -31,7 +31,20 @@ const shirtsSlice = createSlice({
         state.status = 'failed';
         state.error = action.payload as string;
       });
+
+    builder
+      .addCase(createProduct.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(createProduct.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.product = action.payload;
+      })
+      .addCase(createProduct.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload as string;
+      });
   }
 });
 
-export default shirtsSlice.reducer;
+export default productSlice.reducer;

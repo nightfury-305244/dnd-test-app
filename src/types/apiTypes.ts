@@ -6,12 +6,17 @@ export interface Symbol {
   alt: string;
 }
 
-export interface Shirt {
+export interface Stone {
   _id: string;
   name: string;
   price: number;
   alt: string;
-  url: string;
+  url: {
+    frontUrl: string,
+    leftUrl: string,
+    rightUrl: string,
+    backUrl: string
+  }
 }
 
 export interface Position {
@@ -20,10 +25,11 @@ export interface Position {
 }
 
 export interface Product {
-  shirtId?: string,
+  _id?: string;
+  stone?: Stone,
   symbols?: [
     {
-      symbolId: string,
+      symbol: Symbol,
       position: Position
     }
   ],

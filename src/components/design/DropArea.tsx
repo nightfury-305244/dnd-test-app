@@ -12,7 +12,7 @@ interface DropAreaProps {
   dateOnPlate: string;
   droppedItems: DraggableItem[];
   setDroppedItems: React.Dispatch<React.SetStateAction<DraggableItem[]>>;
-  initialShirtPrice: number; // Pass the initial shirt price as a prop
+  initialStonePrice: number;
 }
 
 const DropArea: React.FC<DropAreaProps> = ({
@@ -21,54 +21,75 @@ const DropArea: React.FC<DropAreaProps> = ({
   dateOnPlate,
   droppedItems,
   setDroppedItems,
-  initialShirtPrice,
+  initialStonePrice,
 }) => {
   const dropRef = useRef<HTMLDivElement>(null);
   const PLATE_SIZE = { width: 100, height: 100 };
   const ICON_SIZE = { width: 50, height: 50 };
   const [currentPrice, setCurrentPrice] =
     useLocalStorage<number>("currentPrice");
-  const [price, setPrice] = useState<number>(currentPrice || initialShirtPrice);
+  const [price, setPrice] = useState<number>(currentPrice || initialStonePrice);
 
   useEffect(() => {
     if (droppedItems.length > 0) {
       const newPrice = droppedItems.reduce(
-        (acc, item) => acc + item.price,
-        initialShirtPrice
+        (acc, item) => acc + item.symbol.price,
+        initialStonePrice
       );
       setPrice(newPrice);
       setCurrentPrice(newPrice);
     } else {
-      setPrice(initialShirtPrice);
-      setCurrentPrice(initialShirtPrice);
+      setPrice(initialStonePrice);
+      setCurrentPrice(initialStonePrice);
     }
-  }, [droppedItems, setCurrentPrice, initialShirtPrice]);
+  }, [droppedItems, setCurrentPrice, initialStonePrice]);
 
   const [, drop] = useDrop(() => ({
-    accept: ["icon", "plate"],
+    accept: ["symbol"],
     drop: (item: DraggableItem, monitor) => {
+      console.log(item);
       const clientOffset = monitor.getClientOffset();
       if (clientOffset && dropRef.current) {
         const dropAreaRect = dropRef.current.getBoundingClientRect();
-        let itemSize = item.type === "plate" ? PLATE_SIZE : ICON_SIZE;
+        let itemSize = item.symbol.type === 2 ? PLATE_SIZE : ICON_SIZE;
         const x = clientOffset.x - dropAreaRect.left - itemSize.width / 2;
         const y = clientOffset.y - dropAreaRect.top - itemSize.height / 2;
 
         setDroppedItems((prevItems) => {
           const existingIndex = prevItems.findIndex(
-            (di) => di._id === item._id && di.type === item.type
+            (di) =>
+              di.symbol._id === item.symbol._id &&
+              di.symbol.type == item.symbol.type
           );
 
-          if (item.type === "plate") {
-            const filteredItems = prevItems.filter((di) => di.type !== "plate");
-            return [...filteredItems, { ...item, position: { x, y } }];
+          if (item.symbol.type === 2) {
+            const filteredItems = prevItems.filter(
+              (di) => di.symbol.type !== 2
+            );
+            return [
+              ...filteredItems,
+              {
+                symbol: item.symbol,
+                position: { x, y },
+              },
+            ];
           } else {
             if (existingIndex !== -1) {
               return prevItems.map((di) =>
-                di._id === item._id ? { ...di, position: { x, y } } : di
+                di.symbol._id === item.symbol._id ? { ...di, position: { x, y } } : di
               );
             } else {
-              return [...prevItems, { ...item, position: { x, y } }];
+              console.log({
+                symbol: item.symbol,
+                position: { x, y },
+              })
+              return [
+                ...prevItems,
+                {
+                  symbol: item.symbol,
+                  position: { x, y },
+                },
+              ];
             }
           }
         });
@@ -81,18 +102,24 @@ const DropArea: React.FC<DropAreaProps> = ({
   const moveItem = (itemId: string, x: number, y: number) => {
     setDroppedItems((prevItems) =>
       prevItems.map((item) =>
-        item._id === itemId ? { ...item, position: { x, y } } : item
+        item.symbol._id === itemId ? { ...item, position: { x, y } } : item
       )
     );
   };
 
   return (
-    <Grid container direction={"row"} justifyContent={"center"} spacing={3}>
+    <Grid
+      container
+      direction={"column"}
+      justifyContent={"center"}
+      alignItems={"center"}
+      spacing={3}
+    >
       <Grid item>
-        <Box ref={dropRef} className="relative dropArea-size text-center">
+        <Box ref={dropRef} className="relative text-center">
           {children}
           {droppedItems.map((item, index) =>
-            item.type === "plate" ? (
+            item.symbol.type === 2 ? (
               <PlateItem
                 key={index}
                 item={item}
@@ -106,34 +133,44 @@ const DropArea: React.FC<DropAreaProps> = ({
           )}
         </Box>
       </Grid>
-      <Grid item container spacing={3} justifyContent={"center"}>
-        <Button
-          variant="outlined"
-          size="small"
-          color="error"
-          onClick={() =>
-            setDroppedItems((prev) =>
-              prev.filter((item) => item.type !== "icon")
-            )
-          }
-        >
-          Delete Icons
-        </Button>
-        <Button
-          variant="outlined"
-          size="small"
-          color="error"
-          onClick={() =>
-            setDroppedItems((prev) =>
-              prev.filter((item) => item.type !== "plate")
-            )
-          }
-        >
-          Delete Plate
-        </Button>
+      <Grid
+        item
+        container
+        direction={"row"}
+        spacing={3}
+        justifyContent={"center"}
+      >
+        <Grid item>
+          <Button
+            variant="outlined"
+            size="small"
+            color="error"
+            onClick={() =>
+              setDroppedItems((prev) =>
+                prev.filter((item) => item.symbol.type !== 1)
+              )
+            }
+          >
+            Delete Icons
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            variant="outlined"
+            size="small"
+            color="error"
+            onClick={() =>
+              setDroppedItems((prev) =>
+                prev.filter((item) => item.symbol.type !== 2)
+              )
+            }
+          >
+            Delete Plate
+          </Button>
+        </Grid>
       </Grid>
       <Grid item>
-        <Typography variant="body1">Current Price: {price}</Typography>
+        <Typography variant="subtitle1">Current Price: €{price}</Typography>
       </Grid>
     </Grid>
   );

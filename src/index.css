@@ -42,7 +42,9 @@ img {
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  color: black;
   max-width: 90%;
   overflow: hidden;
   padding: 5px;

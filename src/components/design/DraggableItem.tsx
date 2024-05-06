@@ -1,5 +1,6 @@
 import { useDrag } from "react-dnd";
 import { styled } from "@mui/material";
+import { DraggableItem } from "../../types/types";
 
 const OverlayContainer = styled("div")(() => ({
   position: "relative",
@@ -34,20 +35,15 @@ const Overlay = styled("div")(() => ({
   textAlign: "center",
 }));
 
-const DraggableItem = ({
-  _id,
-  url,
-  type,
-  price,
-}: {
-  _id: string;
-  url: string;
-  type: string;
-  price: number;
-}) => {
+interface DraggableItemProps {
+  item: DraggableItem;
+}
+
+const DraggableItem: React.FC<DraggableItemProps> = ({ item }) => {
+
   const [{ isDragging }, drag] = useDrag(() => ({
-    type: type,
-    item: { _id, type, url, price },
+    type: "symbol",
+    item: item,
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
@@ -59,22 +55,22 @@ const DraggableItem = ({
   };
 
   const className =
-    type === "icon"
+    item.symbol.type === 1 // Assuming the type field is numeric; adjust according to your actual types
       ? "icon-image mx-2 cursor-grab hover:cursor-grabbing w-30 h-30 object-cover rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
       : "plate-image mx-2 cursor-grab hover:cursor-grabbing w-30 h-30 object-cover rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300";
 
   return (
     <OverlayContainer ref={drag} className={className}>
       <img
-        src={url}
-        alt={`Draggable ${type}`}
+        src={item.symbol.url}
+        alt={`Draggable ${item.symbol.type}`}
         className="object-cover rounded-lg shadow-lg w-full h-full"
         style={imgStyle}
       />
       {!isDragging && (
         <Overlay className="hover-overlay">
-          <div>{`Price: €${price}`}</div>
-          <div>{`Type: ${type}`}</div>
+          <div>{`Price: €${item.symbol.price}`}</div>
+          <div>{`Type: ${item.symbol.type}`}</div>
         </Overlay>
       )}
     </OverlayContainer>

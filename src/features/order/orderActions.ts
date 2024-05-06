@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
-import { OrderData, ProductInfo } from '../../types/types';
+import { OrderData } from '../../types/types';
 
 interface OrderRequest {
   subscriberInfo: {
@@ -15,38 +15,19 @@ interface OrderRequest {
     deliveryNumber?: string;
     deliveryTime?: string;
   };
-  productInfo: ProductInfo;
+  productId?: string;
 }
 
 export const createOrder = createAsyncThunk<OrderData, OrderRequest, { state: RootState, rejectValue: string }>(
   'orders/createOrder',
   async (orderRequest, { rejectWithValue }) => {
-    const { productInfo, ...orderDetails } = orderRequest;
     try {
-      const productResponse = await fetch(`${import.meta.env.VITE_API_BASE_URL}/product`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(productInfo),
-      });
-
-      if (!productResponse.ok) {
-        const errorProductMsg = await productResponse.text();
-        throw new Error(errorProductMsg || 'Failed to create product');
-      }
-
-      const product = await productResponse.json();
-
       const orderResponse = await fetch(`${import.meta.env.VITE_API_BASE_URL}/order`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          ...orderDetails,
-          productId: product._id,
-        }),
+        body: JSON.stringify(orderRequest),
       });
 
       if (!orderResponse.ok) {

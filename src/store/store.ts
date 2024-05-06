@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import symbolReducer from "../features/symbols/symbolsSlice";
-import shirtsReducer from "../features/shirts/shirtsSlice";
+import stonesReducer from "../features/stones/stonesSlice";
 import orderReducer from "../features/order/orderSlice";
 import productReducer from "../features/product/productSlice";
 
@@ -9,9 +9,9 @@ import { useDispatch } from "react-redux";
 export const store = configureStore({
   reducer: {
     symbols: symbolReducer,
-    shirts: shirtsReducer,
+    stones: stonesReducer,
     orders: orderReducer,
-    product: productReducer,
+    products: productReducer,
   },
 });
 

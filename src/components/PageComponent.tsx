@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useParams, useNavigate, Navigate } from "react-router-dom";
-import ChooseTShirtPage from "./choose-Tshirt/ChooseTShirtPage";
+import ChooseStonePage from "./choose-stone/ChooseStonePage";
 import DesignPage from "./design/DesignPage";
 import CheckAndOrderPage from "./check-and-order/CheckAndOrderPage";
 import CompletePage from "./complete/CompletePage";
@@ -23,7 +23,7 @@ function PageComponent({ onStepChange }: PageComponentProps) {
     if (step === "select") navigate("/design");
     else if (step === "design") navigate("/order");
     else if (step === "order") {
-      localStorage.removeItem("selectedShirt");
+      localStorage.removeItem("selectedStone");
       localStorage.removeItem("items");
       navigate("/complete");
     }
@@ -37,7 +37,7 @@ function PageComponent({ onStepChange }: PageComponentProps) {
 
   switch (step) {
     case "select":
-      return <ChooseTShirtPage onNavigateNext={nextStep} />;
+      return <ChooseStonePage onNavigateNext={nextStep} />;
     case "design":
       return (
         <DesignPage onNavigateNext={nextStep} onNavigatePrevious={prevStep} />

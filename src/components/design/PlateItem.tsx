@@ -17,14 +17,14 @@ const PlateItem = ({
 }) => {
   const ref = useRef(null);
   const [, drag] = useDrag({
-    type: item.type,
+    type: item.symbol.type === 1 ? "icon" : "plate",
     item: item,
     end: (item, monitor) => {
       const delta = monitor.getDifferenceFromInitialOffset();
       if (delta) {
         const x = Math.round(item.position.x + delta.x);
         const y = Math.round(item.position.y + delta.y);
-        moveItem(item._id, x, y);
+        moveItem(item.symbol._id, x, y);
       }
     },
   });
@@ -42,8 +42,8 @@ const PlateItem = ({
       }}
     >
       <img
-        src={item.url}
-        alt={`Dropped ${item.type}`}
+        src={item.symbol.url}
+        alt={`Dropped ${item.symbol.alt}`}
         style={{ width: "100px", height: "100px" }}
       />
       <div

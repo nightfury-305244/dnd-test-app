@@ -1,37 +1,37 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getShirts } from './shirtsActions';
-import { Shirt } from '../../types/apiTypes';
+import { getStones } from './stonesActions';
+import { Stone } from '../../types/apiTypes';
 
-interface ShirtsState {
-  items: Shirt[];
+interface StonesState {
+  items: Stone[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
 }
 
-const initialState: ShirtsState = {
+const initialState: StonesState = {
   items: [],
   status: 'idle',
   error: null
 };
 
-const shirtsSlice = createSlice({
-  name: 'shirts',
+const stoneSlice = createSlice({
+  name: 'stones',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getShirts.pending, (state) => {
+      .addCase(getStones.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(getShirts.fulfilled, (state, action) => {
+      .addCase(getStones.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.items = action.payload;
       })
-      .addCase(getShirts.rejected, (state, action) => {
+      .addCase(getStones.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload as string;
       });
   }
 });
 
-export default shirtsSlice.reducer;
+export default stoneSlice.reducer;

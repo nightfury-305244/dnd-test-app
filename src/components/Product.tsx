@@ -1,40 +1,41 @@
 import React from "react";
-import { Shirt } from "../types/apiTypes";
+import { Stone } from "../types/apiTypes";
 import { DraggableItem } from "../types/types";
 
 interface ProductProps {
-  selectedShirt: Shirt | null;
+  selectedStone: Stone | null;
   items: DraggableItem[] | null;
-  fTextOnPlate: string | null;
-  fDateOnPlate: string | null;
+  textOnPlate: string | null;
+  dateOnPlate: string | null;
 }
 
 const Product: React.FC<ProductProps> = ({
-  selectedShirt,
+  selectedStone,
   items,
-  fTextOnPlate,
-  fDateOnPlate
+  textOnPlate,
+  dateOnPlate,
 }) => {
   return (
     <div className="relative dropArea-size text-center">
       <img
-        src={selectedShirt?.url}
-        alt={selectedShirt?.alt}
-        className="workspace-size text-center"
+        src={selectedStone?.url.frontUrl}
+        alt={selectedStone?.alt}
+        className="text-center"
+        style={{ width: "auto", maxHeight: "400px" }}
       />
       {items?.map((item, index) =>
-        item.type === "plate" ? (
+        item.symbol.type === 2 ? (
           <div
             key={index}
             style={{
               position: "absolute",
               left: item.position.x,
-              top: item.position.y
+              top: item.position.y,
             }}
           >
             <img
-              src={item.url}
-              alt={`Dropped ${item.type}`}
+              src={item.symbol.url}
+              alt={`Dropped ${item.symbol.alt}`}
               style={{ width: "100px", height: "100px" }}
             />
             <div
@@ -45,12 +46,12 @@ const Product: React.FC<ProductProps> = ({
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
-                textAlign: "center"
+                textAlign: "center",
               }}
             >
-              {fTextOnPlate}
+              {textOnPlate}
               <br />
-              {fDateOnPlate}
+              {dateOnPlate}
             </div>
           </div>
         ) : (
@@ -59,12 +60,12 @@ const Product: React.FC<ProductProps> = ({
             style={{
               position: "absolute",
               left: item.position.x,
-              top: item.position.y
+              top: item.position.y,
             }}
           >
             <img
-              src={item.url}
-              alt={`Dropped ${item.type}`}
+              src={item.symbol.url}
+              alt={`Dropped ${item.symbol.type}`}
               style={{ width: "50px", height: "50px" }}
             />
           </div>

@@ -4,7 +4,7 @@ import { ProductInfo } from "../../types/types";
 
 export const getProduct = createAsyncThunk<
   Product,
-  void,
+  string,
   { rejectValue: string }
 >("product/getProduct", async (productId, { rejectWithValue }) => {
   try {
@@ -12,7 +12,7 @@ export const getProduct = createAsyncThunk<
       `${import.meta.env.VITE_API_BASE_URL}/product/${productId}`
     );
     if (!response.ok) {
-      throw new Error("Failed to fetch shirts");
+      throw new Error("Failed to fetch stones");
     }
     return response.json();
   } catch (error: any) {

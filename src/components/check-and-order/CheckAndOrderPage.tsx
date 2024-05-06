@@ -6,7 +6,8 @@ import { useAppDispatch } from "../../store/store";
 import { createOrder } from "../../features/order/orderActions";
 import useLocalStorage from "../../store/useLocalStorage";
 import { DraggableItem } from "../../types/types";
-import { Shirt } from "../../types/apiTypes";
+import { Stone } from "../../types/apiTypes";
+import { createProduct } from "../../features/product/productActions";
 
 interface FormValues {
   firstName: string;
@@ -34,21 +35,25 @@ const CheckAndOrderPage: React.FC<CheckAndOrderPageProps> = ({
     formState: { errors },
   } = useForm<FormValues>();
 
+
   const dispatch = useAppDispatch();
-  const [selectedShirt] = useLocalStorage<Shirt>("selectedShirt");
+  const [selectedStone] = useLocalStorage<Stone>("selectedStone");
   const [currentPrice] = useLocalStorage<number>("currentPrice");
   const [items] = useLocalStorage<DraggableItem[]>("items");
   const [fTextOnPlate] = useLocalStorage<string>("fTextOnPlate");
   const [fDateOnPlate] = useLocalStorage<string>("fDateOnPlate");
+  const [_productId, setProductId] = useLocalStorage<string>("productId");
 
   const onSubmit = async (data: FormValues) => {
     const productInfo = {
-      shirtId: selectedShirt ? selectedShirt._id : "",
+      stoneId: selectedStone ? selectedStone._id : "",
       droppedSymbols: items ? items : [],
       textOnPlate: fTextOnPlate ? fTextOnPlate : "",
       dateOnPlate: fDateOnPlate ? fDateOnPlate : "",
       price: currentPrice ? currentPrice : 0,
     };
+    const product = await dispatch(createProduct(productInfo)).unwrap();
+    
     const orderData = {
       subscriberInfo: {
         firstName: data.firstName,
@@ -62,12 +67,13 @@ const CheckAndOrderPage: React.FC<CheckAndOrderPageProps> = ({
         deliveryNumber: data.deliveryNumber,
         deliveryTime: data.deliveryTime,
       },
-      productInfo: productInfo,
+      productId: product._id,
     };
     dispatch(createOrder(orderData));
     localStorage.removeItem("fTextOnPlate");
     localStorage.removeItem("fDateOnPlate");
     localStorage.removeItem("currentPrice");
+    setProductId(product._id ? product._id : "");
     onNavigateNext();
   };
 
@@ -202,10 +208,10 @@ const CheckAndOrderPage: React.FC<CheckAndOrderPageProps> = ({
             alignItems={"center"}
           >
             <Product
-              selectedShirt={selectedShirt}
+              selectedStone={selectedStone}
               items={items}
-              fTextOnPlate={fTextOnPlate}
-              fDateOnPlate={fDateOnPlate}
+              textOnPlate={fTextOnPlate}
+              dateOnPlate={fDateOnPlate}
             />
           </Grid>
         </Grid>

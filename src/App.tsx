@@ -10,8 +10,9 @@ import Header from "./components/header/Header";
 import PageComponent from "./components/PageComponent";
 import { useEffect, useState } from "react";
 import { getSymbols } from "./features/symbols/symbolsActions";
-import { getShirts } from "./features/shirts/shirtsActions";
+import { getStones } from "./features/stones/stonesActions";
 import { useAppDispatch } from "./store/store";
+import SharedProduct from "./components/SharedProduct";
 
 const stepMapping: Record<string, number> = {
   select: 0,
@@ -27,7 +28,7 @@ function App() {
   
   useEffect(() => {
     dispatch(getSymbols());
-    dispatch(getShirts());
+    dispatch(getStones());
   }, [dispatch]);
 
   const updateStep = (stepName: string) => {
@@ -41,6 +42,7 @@ function App() {
       <ProgressBar step={currentStep} />
       <Routes>
         <Route path="/" element={<Navigate to="/select" replace />} />
+        <Route path="/product/:productId" element={<SharedProduct />} />
         <Route path="/:step" element={<PageComponent onStepChange={updateStep} />} />
       </Routes>
     </ThemeProvider>

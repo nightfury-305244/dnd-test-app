@@ -1,10 +1,10 @@
 import { useState } from "react";
 import DropArea from "./DropArea";
-import Toolbox from "../Toolbox";
+import Toolbox from "./Toolbox";
 import { Button, Grid, Typography } from "@mui/material";
 import useLocalStorage from "../../store/useLocalStorage";
 import { DraggableItem } from "../../types/types";
-import { Shirt } from "../../types/apiTypes";
+import { Stone } from "../../types/apiTypes";
 
 interface DesignPageProps {
   onNavigateNext: () => void;
@@ -15,7 +15,7 @@ const DesignPage: React.FC<DesignPageProps> = ({
   onNavigateNext,
   onNavigatePrevious,
 }) => {
-  const [selectedShirt] = useLocalStorage<Shirt>("selectedShirt");
+  const [selectedStone] = useLocalStorage<Stone>("selectedStone");
 
   const [textOnPlate, setTextOnPlate] = useState("");
   const [dateOnPlate, setDateOnPlate] = useState("");
@@ -80,12 +80,12 @@ const DesignPage: React.FC<DesignPageProps> = ({
               dateOnPlate={dateOnPlate}
               droppedItems={droppedItems}
               setDroppedItems={setDroppedItems}
-              initialShirtPrice={selectedShirt ? selectedShirt.price : 0}
+              initialStonePrice={selectedStone ? selectedStone.price : 0}
             >
               <img
-                src={selectedShirt?.url}
-                alt={selectedShirt?.alt}
-                className="workspace-size text-center"
+                src={selectedStone?.url.frontUrl}
+                alt={selectedStone?.alt}
+                style={{ width: "auto", maxHeight: "400px" }}
               />
             </DropArea>
           </div>
