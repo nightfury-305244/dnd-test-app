@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getSymbols } from './symbolsActions';
-import { Symbol } from '../../types/apiTypes';
+import { Symbol } from '../../types/types';
 
 interface SymbolsState {
   items: Symbol[];

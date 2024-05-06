@@ -1,7 +1,7 @@
 import { Grid, Typography } from "@mui/material";
 import { useState } from "react";
 import useLocalStorage from "../../store/useLocalStorage";
-import { Stone } from "../../types/apiTypes";
+import { Stone } from "../../types/types";
 import GravestoneCard from "./Stone";
 import { useAppSelector } from "../../hooks";
 

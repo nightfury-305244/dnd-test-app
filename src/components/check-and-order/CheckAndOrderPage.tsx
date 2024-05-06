@@ -5,8 +5,7 @@ import Product from "../Product";
 import { useAppDispatch } from "../../store/store";
 import { createOrder } from "../../features/order/orderActions";
 import useLocalStorage from "../../store/useLocalStorage";
-import { DraggableItem } from "../../types/types";
-import { Stone } from "../../types/apiTypes";
+import { DraggableItem, Stone } from "../../types/types";
 import { createProduct } from "../../features/product/productActions";
 
 interface FormValues {

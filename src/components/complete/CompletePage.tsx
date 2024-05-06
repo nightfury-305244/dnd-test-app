@@ -52,11 +52,11 @@ const CompletePage: React.FC<CompletePageProps> = ({ onNavigateReturn }) => {
           </Link>
         </Grid>
       </Grid>
-      <Grid item>
+      {/* <Grid item>
         <Typography variant="h2" align="center">
           Congratulations!
         </Typography>
-      </Grid>
+      </Grid> */}
       <Button
         variant="contained"
         onClick={onNavigateReturn}

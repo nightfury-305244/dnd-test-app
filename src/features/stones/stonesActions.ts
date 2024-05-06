@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Stone } from "../../types/apiTypes";
+import { Stone } from "../../types/types";
 
 export const getStones = createAsyncThunk<
   Stone[],

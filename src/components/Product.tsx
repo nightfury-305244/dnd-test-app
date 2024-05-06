@@ -1,6 +1,5 @@
 import React from "react";
-import { Stone } from "../types/apiTypes";
-import { DraggableItem } from "../types/types";
+import { DraggableItem, Stone } from "../types/types";
 
 interface ProductProps {
   selectedStone: Stone | null;

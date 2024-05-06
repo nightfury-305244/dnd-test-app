@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getStones } from './stonesActions';
-import { Stone } from '../../types/apiTypes';
+import { Stone } from '../../types/types';
 
 interface StonesState {
   items: Stone[];

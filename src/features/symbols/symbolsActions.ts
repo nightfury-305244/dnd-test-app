@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Symbol } from "../../types/apiTypes";
+import { Symbol } from "../../types/types";
 
 export const getSymbols = createAsyncThunk<
   Symbol[],
