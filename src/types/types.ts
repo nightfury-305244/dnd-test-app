@@ -29,7 +29,7 @@ export interface ProductType {
   stone?: StoneType,
   symbols?: [
     {
-      symbol: Symbol,
+      symbol: SymbolType,
       position: PositionType
     }
   ],
