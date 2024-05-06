@@ -3,7 +3,7 @@ import DropArea from "./DropArea";
 import Toolbox from "./Toolbox";
 import { Button, Grid, Typography } from "@mui/material";
 import useLocalStorage from "../../store/useLocalStorage";
-import { DraggableItem, Stone } from "../../types/types";
+import type { DraggableItem, Stone } from "../../types/types";
 
 interface DesignPageProps {
   onNavigateNext: () => void;

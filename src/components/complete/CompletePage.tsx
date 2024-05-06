@@ -1,4 +1,4 @@
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import Product from "../Product";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { useEffect } from "react";
