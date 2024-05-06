@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getStones } from './stonesActions';
-import { Stone } from '../../types/types';
+import { StoneType } from '../../types/types';
 
 interface StonesState {
-  items: Stone[];
+  items: StoneType[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
 }

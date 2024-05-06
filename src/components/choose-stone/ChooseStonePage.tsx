@@ -1,7 +1,7 @@
 import { Grid, Typography } from "@mui/material";
 import { useState } from "react";
 import useLocalStorage from "../../store/useLocalStorage";
-import { Stone } from "../../types/types";
+import { StoneType } from "../../types/types";
 import GravestoneCard from "./Stone";
 import { useAppSelector } from "../../hooks";
 
@@ -14,7 +14,7 @@ const ChooseStonePage: React.FC<ChooseStonePageProps> = ({
 }) => {
   const stones = useAppSelector((state) => state.stones.items);
   const [selectedStone, setSelectedStone] =
-    useLocalStorage<Stone>("selectedStone");
+    useLocalStorage<StoneType>("selectedStone");
   const [_currentPrice, setCurrentPrice] =
     useLocalStorage<number>("currentPrice");
   const [selectedStoneId, setSelectedStoneId] = useState<string | null>(

@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { ProductInfo, Product } from "../../types/types";
+import { ProductInfoType, ProductType } from "../../types/types";
 
 export const getProduct = createAsyncThunk<
-  Product,
+  ProductType,
   string,
   { rejectValue: string }
 >("product/getProduct", async (productId, { rejectWithValue }) => {
@@ -20,8 +20,8 @@ export const getProduct = createAsyncThunk<
 });
 
 export const createProduct = createAsyncThunk<
-  Product,
-  ProductInfo,
+  ProductType,
+  ProductInfoType,
   { rejectValue: string }
 >("product/createProduct", async (productInfo, { rejectWithValue }) => {
   try {

@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Product } from '../../types/types';
+import { ProductType } from '../../types/types';
 import { getProduct, createProduct } from './productActions';
 
 interface ProductState {
-  product: Product;
+  product: ProductType;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
 }

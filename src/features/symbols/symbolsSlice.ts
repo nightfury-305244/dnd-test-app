@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getSymbols } from './symbolsActions';
-import { Symbol } from '../../types/types';
+import { SymbolType } from '../../types/types';
 
 interface SymbolsState {
-  items: Symbol[];
+  items: SymbolType[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
 }

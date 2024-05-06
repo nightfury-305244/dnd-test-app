@@ -3,7 +3,7 @@ import DropArea from "./DropArea";
 import Toolbox from "./Toolbox";
 import { Button, Grid, Typography } from "@mui/material";
 import useLocalStorage from "../../store/useLocalStorage";
-import type { DraggableItem, Stone } from "../../types/types";
+import  { DraggableItemType, StoneType } from "../../types/types";
 
 interface DesignPageProps {
   onNavigateNext: () => void;
@@ -14,7 +14,7 @@ const DesignPage: React.FC<DesignPageProps> = ({
   onNavigateNext,
   onNavigatePrevious,
 }) => {
-  const [selectedStone] = useLocalStorage<Stone>("selectedStone");
+  const [selectedStone] = useLocalStorage<StoneType>("selectedStone");
   
   const [fTextOnPlate, setFTextOnPlate] =
     useLocalStorage<string>("fTextOnPlate");
@@ -23,9 +23,9 @@ const DesignPage: React.FC<DesignPageProps> = ({
   const [textOnPlate, setTextOnPlate] = useState<string>(fTextOnPlate ? fTextOnPlate : "");
   const [dateOnPlate, setDateOnPlate] = useState<string>(fDateOnPlate ? fDateOnPlate : "");
 
-  const [items, setItems] = useLocalStorage<DraggableItem[]>("items");
+  const [items, setItems] = useLocalStorage<DraggableItemType[]>("items");
 
-  const [droppedItems, setDroppedItems] = useState<DraggableItem[]>(
+  const [droppedItems, setDroppedItems] = useState<DraggableItemType[]>(
     items ? items : []
   );
 

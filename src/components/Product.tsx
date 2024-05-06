@@ -1,9 +1,9 @@
 import React from "react";
-import { DraggableItem, Stone } from "../types/types";
+import { DraggableItemType, StoneType } from "../types/types";
 
 interface ProductProps {
-  selectedStone: Stone | null;
-  items: DraggableItem[] | null;
+  selectedStone: StoneType | null;
+  items: DraggableItemType[] | null;
   textOnPlate: string | null;
   dateOnPlate: string | null;
 }

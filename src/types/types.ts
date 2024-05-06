@@ -1,4 +1,4 @@
-export interface Symbol {
+export interface SymbolType {
   _id: string;
   type: number;
   url: string;
@@ -6,7 +6,7 @@ export interface Symbol {
   alt: string;
 }
 
-export interface Stone {
+export interface StoneType {
   _id: string;
   name: string;
   price: number;
@@ -19,18 +19,18 @@ export interface Stone {
   }
 }
 
-export interface Position {
+export interface PositionType {
   x: number;
   y: number;
 }
 
-export interface Product {
+export interface ProductType {
   _id?: string;
-  stone?: Stone,
+  stone?: StoneType,
   symbols?: [
     {
       symbol: Symbol,
-      position: Position
+      position: PositionType
     }
   ],
   textOnPlate?: string,
@@ -38,12 +38,12 @@ export interface Product {
   price?: string
 }
 
-export interface DraggableItem {
-  symbol: Symbol;
-  position: Position;
+export interface DraggableItemType {
+  symbol: SymbolType;
+  position: PositionType;
 }
 
-export interface OrderData {
+export interface OrderDataType {
   subscriberInfo: {
     firstName: string;
     lastName: string;
@@ -58,15 +58,15 @@ export interface OrderData {
   };
 }
 
-export interface OrderState {
-  order: OrderData | null;
+export interface OrderStateType {
+  order: OrderDataType | null;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
 
-export interface ProductInfo {
+export interface ProductInfoType {
   stoneId: string;
-  droppedSymbols?: DraggableItem[];
+  droppedSymbols?: DraggableItemType[];
   textOnPlate?: string;
   dateOnPlate?: string;
   price: number;

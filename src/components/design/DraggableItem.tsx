@@ -1,6 +1,6 @@
 import { useDrag } from "react-dnd";
 import { styled } from "@mui/material";
-import { DraggableItem } from "../../types/types";
+import { DraggableItemType } from "../../types/types";
 
 const OverlayContainer = styled("div")(() => ({
   position: "relative",
@@ -36,7 +36,7 @@ const Overlay = styled("div")(() => ({
 }));
 
 interface DraggableItemProps {
-  item: DraggableItem;
+  item: DraggableItemType;
 }
 
 const DraggableItem: React.FC<DraggableItemProps> = ({ item }) => {

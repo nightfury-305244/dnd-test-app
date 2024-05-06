@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { OrderData, OrderState } from '../../types/types';
+import { OrderDataType, OrderStateType } from '../../types/types';
 import { createOrder } from './orderActions';
 
-const initialState: OrderState = {
+const initialState: OrderStateType = {
   order: null,
   status: 'idle',
   error: null
@@ -17,7 +17,7 @@ const orderSlice = createSlice({
       .addCase(createOrder.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(createOrder.fulfilled, (state, action: PayloadAction<OrderData>) => {
+      .addCase(createOrder.fulfilled, (state, action: PayloadAction<OrderDataType>) => {
         state.status = 'succeeded';
         state.order = action.payload;
       })

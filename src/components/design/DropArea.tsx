@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDrop } from "react-dnd";
-import { DraggableItem } from "../../types/types";
+import { DraggableItemType } from "../../types/types";
 import IconItem from "./IconItem";
 import PlateItem from "./PlateItem";
 import { Box, Button, Grid, Typography } from "@mui/material";
@@ -10,8 +10,8 @@ interface DropAreaProps {
   children: React.ReactNode;
   textOnPlate: string;
   dateOnPlate: string;
-  droppedItems: DraggableItem[];
-  setDroppedItems: React.Dispatch<React.SetStateAction<DraggableItem[]>>;
+  droppedItems: DraggableItemType[];
+  setDroppedItems: React.Dispatch<React.SetStateAction<DraggableItemType[]>>;
   initialStonePrice: number;
 }
 
@@ -46,7 +46,7 @@ const DropArea: React.FC<DropAreaProps> = ({
 
   const [, drop] = useDrop(() => ({
     accept: ["symbol"],
-    drop: (item: DraggableItem, monitor) => {
+    drop: (item: DraggableItemType, monitor) => {
       console.log(item);
       const clientOffset = monitor.getClientOffset();
       if (clientOffset && dropRef.current) {

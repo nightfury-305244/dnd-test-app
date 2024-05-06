@@ -1,11 +1,11 @@
 import { useDrag } from "react-dnd";
 import { useRef } from "react";
-import { DraggableItem } from "../../types/types";
+import { DraggableItemType } from "../../types/types";
 
 type MoveItemFunction = (id: string, x: number, y: number) => void;
 
 interface IconItemProps {
-  item: DraggableItem;
+  item: DraggableItemType;
   moveItem: MoveItemFunction;
 }
 

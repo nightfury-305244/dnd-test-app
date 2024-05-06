@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Symbol } from "../../types/types";
+import { SymbolType } from "../../types/types";
 
 export const getSymbols = createAsyncThunk<
-  Symbol[],
+  SymbolType[],
   void,
   { rejectValue: string }
 >("symbols/getSymbols", async (_, { rejectWithValue }) => {

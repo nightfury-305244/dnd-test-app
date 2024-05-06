@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useDrag } from "react-dnd";
-import { DraggableItem } from "../../types/types";
+import { DraggableItemType } from "../../types/types";
 
 type MoveItemFunction = (id: string, x: number, y: number) => void;
 
@@ -10,7 +10,7 @@ const PlateItem = ({
   textOnPlate,
   dateOnPlate,
 }: {
-  item: DraggableItem;
+  item: DraggableItemType;
   moveItem: MoveItemFunction;
   textOnPlate: string;
   dateOnPlate: string;

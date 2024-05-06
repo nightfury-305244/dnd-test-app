@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
-import { OrderData } from '../../types/types';
+import { OrderDataType } from '../../types/types';
 
 interface OrderRequest {
   subscriberInfo: {
@@ -18,7 +18,7 @@ interface OrderRequest {
   productId?: string;
 }
 
-export const createOrder = createAsyncThunk<OrderData, OrderRequest, { state: RootState, rejectValue: string }>(
+export const createOrder = createAsyncThunk<OrderDataType, OrderRequest, { state: RootState, rejectValue: string }>(
   'orders/createOrder',
   async (orderRequest, { rejectWithValue }) => {
     try {

@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Stone } from "../../types/types";
+import { StoneType } from "../../types/types";
 
 export const getStones = createAsyncThunk<
-  Stone[],
+  StoneType[],
   void,
   { rejectValue: string }
 >("stones/getStones", async (_, { rejectWithValue }) => {

@@ -5,7 +5,7 @@ import Product from "../Product";
 import { useAppDispatch } from "../../store/store";
 import { createOrder } from "../../features/order/orderActions";
 import useLocalStorage from "../../store/useLocalStorage";
-import { DraggableItem, Stone } from "../../types/types";
+import { DraggableItemType, StoneType } from "../../types/types";
 import { createProduct } from "../../features/product/productActions";
 
 interface FormValues {
@@ -36,9 +36,9 @@ const CheckAndOrderPage: React.FC<CheckAndOrderPageProps> = ({
 
 
   const dispatch = useAppDispatch();
-  const [selectedStone] = useLocalStorage<Stone>("selectedStone");
+  const [selectedStone] = useLocalStorage<StoneType>("selectedStone");
   const [currentPrice] = useLocalStorage<number>("currentPrice");
-  const [items] = useLocalStorage<DraggableItem[]>("items");
+  const [items] = useLocalStorage<DraggableItemType[]>("items");
   const [fTextOnPlate] = useLocalStorage<string>("fTextOnPlate");
   const [fDateOnPlate] = useLocalStorage<string>("fDateOnPlate");
   const [_productId, setProductId] = useLocalStorage<string>("productId");
