@@ -1,16 +1,13 @@
-import { Button, Grid, Typography, styled } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { useState } from "react";
 import useLocalStorage from "../../store/useLocalStorage";
 import { useAppSelector } from "../../hooks";
 import { Shirt } from "../../types/apiTypes";
+import ShirtButton from "../Shirt";
 
 interface ChooseTShirtPageProps {
   onNavigateNext: () => void;
 }
-
-const SelectedButton = styled(Button)(({ theme }) => ({
-  border: `4px solid ${theme.palette.secondary.main}`,
-}));
 
 const ChooseTShirtPage: React.FC<ChooseTShirtPageProps> = ({
   onNavigateNext,
@@ -18,7 +15,7 @@ const ChooseTShirtPage: React.FC<ChooseTShirtPageProps> = ({
   const shirts = useAppSelector((state) => state.shirts.items);
   const [selectedShirt, setSelectedShirt] =
     useLocalStorage<Shirt>("selectedShirt");
-  const [currentPrice, setCurrentPrice] =
+  const [_currentPrice, setCurrentPrice] =
     useLocalStorage<number>("currentPrice");
   const [selectedShirtId, setSelectedShirtId] = useState<string | null>(
     selectedShirt ? selectedShirt._id : null
@@ -28,7 +25,6 @@ const ChooseTShirtPage: React.FC<ChooseTShirtPageProps> = ({
     setSelectedShirt(shirt);
     setSelectedShirtId(shirt._id);
     setCurrentPrice(shirt.price);
-    console.log(currentPrice);
     onNavigateNext();
   };
 
@@ -48,27 +44,13 @@ const ChooseTShirtPage: React.FC<ChooseTShirtPageProps> = ({
       <Grid container item justifyContent={"center"} spacing={3}>
         {shirts.map((shirt) => (
           <Grid item key={shirt._id}>
-            {shirt._id === selectedShirtId ? (
-              <SelectedButton
-                onClick={() => handleSelectShirt(shirt)}
-                className="!p-0"
-              >
-                <img
-                  src={shirt.url}
-                  alt={shirt.alt}
-                  className="list-image-size text-center"
-                />
-              </SelectedButton>
-            ) : (
-              <Button onClick={() => handleSelectShirt(shirt)} className="!p-0">
-                <img
-                  key={shirt._id}
-                  src={shirt.url}
-                  alt={shirt.alt}
-                  className="list-image-size text-center"
-                />
-              </Button>
-            )}
+            <ShirtButton
+              url={shirt.url}
+              title={shirt.alt}
+              price={`${shirt.price}`}
+              selected={shirt._id === selectedShirtId}
+              onClick={() => handleSelectShirt(shirt)}
+            />
           </Grid>
         ))}
       </Grid>

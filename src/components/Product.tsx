@@ -1,14 +1,20 @@
-import useLocalStorage from "../store/useLocalStorage";
+import React from "react";
 import { Shirt } from "../types/apiTypes";
 import { DraggableItem } from "../types/types";
 
-const Product: React.FC = () => {
-  const [selectedShirt] = useLocalStorage<Shirt>("selectedShirt");
-  const [items] = useLocalStorage<DraggableItem[]>("items");
-  const [fTextOnPlate] = useLocalStorage<string>("fTextOnPlate");
-  const [fDateOnPlate] = useLocalStorage<string>("fDateOnPlate");
+interface ProductProps {
+  selectedShirt: Shirt | null;
+  items: DraggableItem[] | null;
+  fTextOnPlate: string | null;
+  fDateOnPlate: string | null;
+}
 
-
+const Product: React.FC<ProductProps> = ({
+  selectedShirt,
+  items,
+  fTextOnPlate,
+  fDateOnPlate
+}) => {
   return (
     <div className="relative dropArea-size text-center">
       <img
@@ -23,7 +29,7 @@ const Product: React.FC = () => {
             style={{
               position: "absolute",
               left: item.position.x,
-              top: item.position.y,
+              top: item.position.y
             }}
           >
             <img
@@ -39,7 +45,7 @@ const Product: React.FC = () => {
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
-                textAlign: "center",
+                textAlign: "center"
               }}
             >
               {fTextOnPlate}
@@ -53,7 +59,7 @@ const Product: React.FC = () => {
             style={{
               position: "absolute",
               left: item.position.x,
-              top: item.position.y,
+              top: item.position.y
             }}
           >
             <img

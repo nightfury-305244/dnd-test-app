@@ -18,3 +18,16 @@ export interface Position {
   x: number;
   y: number;
 }
+
+export interface Product {
+  shirtId?: string,
+  symbols?: [
+    {
+      symbolId: string,
+      position: Position
+    }
+  ],
+  textOnPlate?: string,
+  dateOnPlate?: string,
+  price?: string
+}

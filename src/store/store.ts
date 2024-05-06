@@ -1,14 +1,17 @@
-import { configureStore } from '@reduxjs/toolkit';
-import symbolReducer from '../features/symbols/symbolsSlice';
-import shirtsReducer from '../features/shirts/shirtsSlice';
-import orderReducer from '../features/order/orderSlice';
-import { useDispatch } from 'react-redux';
+import { configureStore } from "@reduxjs/toolkit";
+import symbolReducer from "../features/symbols/symbolsSlice";
+import shirtsReducer from "../features/shirts/shirtsSlice";
+import orderReducer from "../features/order/orderSlice";
+import productReducer from "../features/product/productSlice";
+
+import { useDispatch } from "react-redux";
 
 export const store = configureStore({
   reducer: {
     symbols: symbolReducer,
     shirts: shirtsReducer,
-    order: orderReducer
+    orders: orderReducer,
+    product: productReducer,
   },
 });
 

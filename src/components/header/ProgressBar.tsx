@@ -1,29 +1,17 @@
-import { LinearProgress, Typography, Box } from "@mui/material";
+import React from "react";
+import LinearProgress from "@mui/material/LinearProgress";
+import Box from "@mui/material/Box";
 
-const ProgressBar = ({ step }: { step: string | undefined }) => {
-  const stepToPercentage = (currentStep: string | undefined) => {
-    switch (currentStep) {
-      case "select":
-        return 0;
-      case "design":
-        return 50;
-      case "order":
-        return 100;
-      default:
-        return 0;
-    }
-  };
+interface ProgressBarProps {
+  step: number;
+}
+
+const ProgressBar: React.FC<ProgressBarProps> = ({ step }) => {
+  const progressPercentage = (step / 3) * 100;
 
   return (
     <Box sx={{ width: "80%", mt: 10, mb: 3, mx: "auto" }}>
-      <Typography variant="body2" color="text.secondary">
-        Step {step}
-      </Typography>
-      <LinearProgress
-        color="secondary"
-        variant="determinate"
-        value={stepToPercentage(step)}
-      />
+      <LinearProgress variant="determinate" value={progressPercentage} />
     </Box>
   );
 };

@@ -21,12 +21,11 @@ const DesignPage: React.FC<DesignPageProps> = ({
   const [dateOnPlate, setDateOnPlate] = useState("");
 
   const [items, setItems] = useLocalStorage<DraggableItem[]>("items");
-  const [fTextOnPlate, setFTextOnPlate] =
+  const [_fTextOnPlate, setFTextOnPlate] =
     useLocalStorage<string>("fTextOnPlate");
-  const [fDateOnPlate, setFDateOnPlate] =
+  const [_fDateOnPlate, setFDateOnPlate] =
     useLocalStorage<string>("fDateOnPlate");
 
-  console.log(fTextOnPlate, fDateOnPlate);
   const [droppedItems, setDroppedItems] = useState<DraggableItem[]>(
     items ? items : []
   );

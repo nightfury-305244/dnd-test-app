@@ -65,6 +65,9 @@ const CheckAndOrderPage: React.FC<CheckAndOrderPageProps> = ({
       productInfo: productInfo,
     };
     dispatch(createOrder(orderData));
+    localStorage.removeItem("fTextOnPlate");
+    localStorage.removeItem("fDateOnPlate");
+    localStorage.removeItem("currentPrice");
     onNavigateNext();
   };
 
@@ -198,7 +201,12 @@ const CheckAndOrderPage: React.FC<CheckAndOrderPageProps> = ({
             direction={"column"}
             alignItems={"center"}
           >
-            <Product />
+            <Product
+              selectedShirt={selectedShirt}
+              items={items}
+              fTextOnPlate={fTextOnPlate}
+              fDateOnPlate={fDateOnPlate}
+            />
           </Grid>
         </Grid>
         <Grid item container justifyContent="center">
