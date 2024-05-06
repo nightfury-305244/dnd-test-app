@@ -1,4 +1,4 @@
-import { Position, Symbol } from "./apiTypes";
+import type { Position, Symbol } from "./apiTypes";
 
 export interface DraggableItem {
   symbol: Symbol;
