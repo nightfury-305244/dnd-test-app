@@ -43,15 +43,15 @@ function App() {
         <Route path="/" element={<Navigate to="/select" replace />} />
         <Route path="/product/:productId" element={<SharedProduct />} />
         <Route
-          path="/:step"
-          element={<PageComponent onStepChange={updateStep} />}
-        />
-        <Route
           path="/admin"
           element={<AdminDashboardPage />} 
         />
         <Route path="/admin/stone" element={<StoneManagementPage />} />
         <Route path="/admin/symbol" element={<SymbolManagementPage />} />
+        <Route
+          path="/:step"
+          element={<PageComponent onStepChange={updateStep} />}
+        />
       </Routes>
     </ThemeProvider>
   );
