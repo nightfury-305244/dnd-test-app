@@ -13,7 +13,7 @@ const SharedProduct: React.FC = () => {
 
   useEffect(() => {
     dispatch(getProduct(productId ? productId : ""));
-  });
+  }, [productId]);
 
   return (
     <Grid

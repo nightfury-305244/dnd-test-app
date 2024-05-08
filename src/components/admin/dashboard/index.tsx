@@ -12,6 +12,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useAppDispatch } from "../../../hooks";
 import { signIn } from "../../../features/auth/authActions";
 import { useNavigate } from "react-router-dom";
+import { unwrapResult } from "@reduxjs/toolkit";
 
 const defaultTheme = createTheme();
 
@@ -19,18 +20,18 @@ const AdminDashboardPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const email = data.get("email") as string;
     const password = data.get("password") as string;
-    dispatch(signIn({ email, password }))
-      .then(() => {
-        navigate("/admin/stone");
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    try {
+      const signInResult = await dispatch(signIn({ email, password }));
+      unwrapResult(signInResult);
+      navigate("/admin/stone");
+    } catch (error: any) {
+      console.error("Login failed:", error);
+    }
   };
 
   return (

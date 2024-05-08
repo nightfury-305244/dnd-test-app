@@ -48,9 +48,8 @@ function App() {
         />
         <Route
           path="/admin"
-          element={<Navigate to="/admin/dashboard" replace />}
+          element={<AdminDashboardPage />} 
         />
-        <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
         <Route path="/admin/stone" element={<StoneManagementPage />} />
         <Route path="/admin/symbol" element={<SymbolManagementPage />} />
       </Routes>
