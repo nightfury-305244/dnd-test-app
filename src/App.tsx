@@ -43,7 +43,7 @@ function App() {
         <Route path="/" element={<Navigate to="/select" replace />} />
         <Route path="/product/:productId" element={<SharedProduct />} />
         <Route
-          path="/admin"
+          path="/admin/auth"
           element={<AdminDashboardPage />} 
         />
         <Route path="/admin/stone" element={<StoneManagementPage />} />
