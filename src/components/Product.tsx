@@ -1,5 +1,6 @@
 import React from "react";
 import { DraggableItemType, StoneType } from "../types/types";
+import { getFullImageUrl } from "../utils/utils";
 
 interface ProductProps {
   selectedStone: StoneType | null;
@@ -19,7 +20,7 @@ const Product: React.FC<ProductProps> = ({
   return (
     <div className="relative dropArea-size text-center">
       <img
-        src={selectedStone?.url.frontUrl}
+        src={getFullImageUrl(selectedStone ? selectedStone.url.frontUrl : "")}
         alt={selectedStone?.alt}
         className="text-center"
         style={{ width: "auto", maxHeight: "400px" }}
@@ -35,7 +36,7 @@ const Product: React.FC<ProductProps> = ({
             }}
           >
             <img
-              src={item.symbol.url}
+              src={getFullImageUrl(item.symbol.url)}
               alt={`Dropped ${item.symbol.alt}`}
               style={{ width: "100px", height: "100px" }}
             />
@@ -67,7 +68,7 @@ const Product: React.FC<ProductProps> = ({
             }}
           >
             <img
-              src={item.symbol.url}
+              src={getFullImageUrl(item.symbol.url)}
               alt={`Dropped ${item.symbol.type}`}
               style={{ width: "50px", height: "50px" }}
             />

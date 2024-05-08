@@ -1,6 +1,7 @@
 import { useDrag } from "react-dnd";
 import { useRef } from "react";
 import { DraggableItemType } from "../../types/types";
+import { getFullImageUrl } from "../../utils/utils";
 
 type MoveItemFunction = (id: string, x: number, y: number) => void;
 
@@ -41,7 +42,7 @@ const IconItem: React.FC<IconItemProps> = ({ item, moveItem }) => {
       }}
     >
       <img
-        src={item.symbol.url}
+        src={getFullImageUrl(item.symbol.url)}
         alt={`Dropped ${item.symbol.alt}`}
         style={{ width: "50px", height: "50px" }}
       />

@@ -1,6 +1,7 @@
 import { useDrag } from "react-dnd";
 import { styled } from "@mui/material";
 import { DraggableItemType } from "../../types/types";
+import { getFullImageUrl } from "../../utils/utils";
 
 const OverlayContainer = styled("div")(() => ({
   position: "relative",
@@ -40,7 +41,6 @@ interface DraggableItemProps {
 }
 
 const DraggableItem: React.FC<DraggableItemProps> = ({ item }) => {
-
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "symbol",
     item: item,
@@ -62,7 +62,7 @@ const DraggableItem: React.FC<DraggableItemProps> = ({ item }) => {
   return (
     <OverlayContainer ref={drag} className={className}>
       <img
-        src={item.symbol.url}
+        src={getFullImageUrl(item.symbol.url)}
         alt={`Draggable ${item.symbol.type}`}
         className="object-cover rounded-lg shadow-lg w-full h-full"
         style={imgStyle}

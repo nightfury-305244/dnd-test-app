@@ -4,6 +4,7 @@ import Toolbox from "./Toolbox";
 import { Button, Grid, Typography } from "@mui/material";
 import useLocalStorage from "../../store/useLocalStorage";
 import { DraggableItemType, StoneType } from "../../types/types";
+import { getFullImageUrl } from "../../utils/utils";
 
 interface DesignPageProps {
   onNavigateNext: () => void;
@@ -92,7 +93,9 @@ const DesignPage: React.FC<DesignPageProps> = ({
               initialStonePrice={selectedStone ? selectedStone.price : 0}
             >
               <img
-                src={selectedStone?.url.frontUrl}
+                src={getFullImageUrl(
+                  selectedStone ? selectedStone.url.frontUrl : ""
+                )}
                 alt={selectedStone?.alt}
                 style={{ width: "auto", maxHeight: "400px" }}
               />

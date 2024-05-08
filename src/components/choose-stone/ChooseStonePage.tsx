@@ -48,6 +48,7 @@ const ChooseStonePage: React.FC<ChooseStonePageProps> = ({
               url={stone.url}
               title={stone.name}
               price={`${stone.price}`}
+              description={stone.description}
               selected={stone._id === selectedStoneId}
               onSelect={() => handleSelectStone(stone)}
             />

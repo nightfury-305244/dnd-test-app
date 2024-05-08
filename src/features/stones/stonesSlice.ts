@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getStones } from './stonesActions';
+import { createStone, getStones } from './stonesActions';
 import { StoneType } from '../../types/types';
 
 interface StonesState {
@@ -31,6 +31,18 @@ const stoneSlice = createSlice({
         state.status = 'failed';
         state.error = action.payload as string;
       });
+    builder
+    .addCase(createStone.pending, (state) => {
+      state.status = "loading";
+    })
+    .addCase(createStone.fulfilled, (state, action) => {
+      state.items.push(action.payload);
+      state.status = "succeeded";
+    })
+    .addCase(createStone.rejected, (state, action) => {
+      state.status = "failed",
+      state.error = action.payload as string;
+    })
   }
 });
 

@@ -4,8 +4,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import { Grid } from "@mui/material";
-import theme from "../../theme";
-import { getFullImageUrl } from "../../utils/utils";
+import { getFullImageUrl } from "../../../utils/utils";
 
 interface GravestoneCardProps {
   url: {
@@ -15,8 +14,7 @@ interface GravestoneCardProps {
     backUrl: string;
   };
   title: string;
-  selected?: boolean;
-  onSelect: () => void;
+  onEdit: () => void;
   price?: string;
   description?: string;
 }
@@ -37,8 +35,7 @@ const GravestoneCard: React.FC<GravestoneCardProps> = ({
   url,
   title,
   price,
-  selected = false,
-  onSelect,
+  // onEdit,
   description,
 }) => {
   const [currentUrl, setCurrentUrl] = React.useState(url.frontUrl);
@@ -51,7 +48,6 @@ const GravestoneCard: React.FC<GravestoneCardProps> = ({
     boxShadow:
       "rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px",
     padding: "20px 30px",
-    border: selected ? `3px solid ${theme.palette.secondary.light}` : "none",
     borderRadius: "8px",
     minWidth: "350px",
   };
@@ -100,11 +96,12 @@ const GravestoneCard: React.FC<GravestoneCardProps> = ({
       <Grid item>
         <Typography className="!mb-4">{description}</Typography>
       </Grid>
-      <Grid item>
+
+      {/* <Grid item>
         <ButtonGroup variant="contained">
-          <Button onClick={onSelect}>Select</Button>
+          <Button onClick={onEdit}>Edit</Button>
         </ButtonGroup>
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 };

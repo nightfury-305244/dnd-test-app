@@ -49,7 +49,6 @@ const DropArea: React.FC<DropAreaProps> = ({
   const [, drop] = useDrop(() => ({
     accept: ["symbol"],
     drop: (item: DraggableItemType, monitor) => {
-      console.log(item);
       const clientOffset = monitor.getClientOffset();
       if (clientOffset && dropRef.current) {
         const dropAreaRect = dropRef.current.getBoundingClientRect();
@@ -81,10 +80,6 @@ const DropArea: React.FC<DropAreaProps> = ({
                 di.symbol._id === item.symbol._id ? { ...di, position: { x, y } } : di
               );
             } else {
-              console.log({
-                symbol: item.symbol,
-                position: { x, y },
-              })
               return [
                 ...prevItems,
                 {

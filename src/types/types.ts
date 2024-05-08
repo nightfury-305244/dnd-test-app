@@ -1,9 +1,18 @@
 export interface SymbolType {
   _id: string;
+  name: string;
   type: number;
   url: string;
   price: number;
   alt: string;
+}
+
+export interface CreateSymbolType {
+  name: string;
+  alt: string;
+  price: number;
+  type: number;
+  image: File;
 }
 
 export interface StoneType {
@@ -11,12 +20,23 @@ export interface StoneType {
   name: string;
   price: number;
   alt: string;
+  description?: string;
   url: {
-    frontUrl: string,
-    leftUrl: string,
-    rightUrl: string,
-    backUrl: string
-  }
+    frontUrl: string;
+    leftUrl: string;
+    rightUrl: string;
+    backUrl: string;
+  };
+}
+export interface CreateStoneType {
+  name: string;
+  description?: string;
+  alt: string;
+  price: number;
+  frontImage: File;
+  leftImage?: File;
+  rightImage?: File;
+  backImage?: File;
 }
 
 export interface PositionType {
@@ -26,17 +46,17 @@ export interface PositionType {
 
 export interface ProductType {
   _id?: string;
-  stone?: StoneType,
+  stone?: StoneType;
   symbols?: [
     {
-      symbol: SymbolType,
-      position: PositionType
+      symbol: SymbolType;
+      position: PositionType;
     }
-  ],
-  textOnPlate?: string,
-  dateOnPlate?: string,
-  birthdayOnPlate?: string,
-  price?: string
+  ];
+  textOnPlate?: string;
+  dateOnPlate?: string;
+  birthdayOnPlate?: string;
+  price?: string;
 }
 
 export interface DraggableItemType {
@@ -72,4 +92,9 @@ export interface ProductInfoType {
   dateOnPlate?: string;
   birthdayOnPlate?: string;
   price: number;
+}
+
+export interface AuthType {
+  email: string;
+  password: string;
 }

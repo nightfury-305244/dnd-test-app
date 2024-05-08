@@ -16,3 +16,29 @@ export const getStones = createAsyncThunk<
     return rejectWithValue(error.message);
   }
 });
+
+export const createStone = createAsyncThunk<
+  StoneType,
+  FormData,
+  { rejectValue: string }
+>(
+  "stones/createStone",
+  async (formData: FormData, { rejectWithValue }) => {
+    try {
+
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/stone`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Server responded with an error!");
+      }
+      return await response.json();
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);

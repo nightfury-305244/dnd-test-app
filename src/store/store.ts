@@ -3,6 +3,7 @@ import symbolReducer from "../features/symbols/symbolsSlice";
 import stonesReducer from "../features/stones/stonesSlice";
 import orderReducer from "../features/order/orderSlice";
 import productReducer from "../features/product/productSlice";
+import authReducer from "../features/auth/authSlice";
 
 import { useDispatch } from "react-redux";
 
@@ -12,6 +13,7 @@ export const store = configureStore({
     stones: stonesReducer,
     orders: orderReducer,
     products: productReducer,
+    auth: authReducer
   },
 });
 

@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { useDrag } from "react-dnd";
 import { DraggableItemType } from "../../types/types";
+import { getFullImageUrl } from "../../utils/utils";
 
 type MoveItemFunction = (id: string, x: number, y: number) => void;
 
@@ -44,7 +45,7 @@ const PlateItem = ({
       }}
     >
       <img
-        src={item.symbol.url}
+        src={getFullImageUrl(item.symbol.url)}
         alt={`Dropped ${item.symbol.alt}`}
         style={{ width: "100px", height: "100px" }}
       />
