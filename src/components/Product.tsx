@@ -6,6 +6,7 @@ interface ProductProps {
   items: DraggableItemType[] | null;
   textOnPlate: string | null;
   dateOnPlate: string | null;
+  birthdayOnPlate: string | null;
 }
 
 const Product: React.FC<ProductProps> = ({
@@ -13,6 +14,7 @@ const Product: React.FC<ProductProps> = ({
   items,
   textOnPlate,
   dateOnPlate,
+  birthdayOnPlate,
 }) => {
   return (
     <div className="relative dropArea-size text-center">
@@ -49,6 +51,8 @@ const Product: React.FC<ProductProps> = ({
               }}
             >
               {textOnPlate}
+              <br />
+              {birthdayOnPlate}
               <br />
               {dateOnPlate}
             </div>

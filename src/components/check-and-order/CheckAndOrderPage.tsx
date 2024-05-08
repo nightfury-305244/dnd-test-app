@@ -34,13 +34,13 @@ const CheckAndOrderPage: React.FC<CheckAndOrderPageProps> = ({
     formState: { errors },
   } = useForm<FormValues>();
 
-
   const dispatch = useAppDispatch();
   const [selectedStone] = useLocalStorage<StoneType>("selectedStone");
   const [currentPrice] = useLocalStorage<number>("currentPrice");
   const [items] = useLocalStorage<DraggableItemType[]>("items");
   const [fTextOnPlate] = useLocalStorage<string>("fTextOnPlate");
   const [fDateOnPlate] = useLocalStorage<string>("fDateOnPlate");
+  const [fBirthdayOnPlate] = useLocalStorage<string>("fBirthdayOnPlate");
   const [_productId, setProductId] = useLocalStorage<string>("productId");
 
   const onSubmit = async (data: FormValues) => {
@@ -49,10 +49,11 @@ const CheckAndOrderPage: React.FC<CheckAndOrderPageProps> = ({
       droppedSymbols: items ? items : [],
       textOnPlate: fTextOnPlate ? fTextOnPlate : "",
       dateOnPlate: fDateOnPlate ? fDateOnPlate : "",
+      birthdayOnPlate: fBirthdayOnPlate ? fBirthdayOnPlate : "",
       price: currentPrice ? currentPrice : 0,
     };
     const product = await dispatch(createProduct(productInfo)).unwrap();
-    
+
     const orderData = {
       subscriberInfo: {
         firstName: data.firstName,
@@ -71,6 +72,7 @@ const CheckAndOrderPage: React.FC<CheckAndOrderPageProps> = ({
     dispatch(createOrder(orderData));
     localStorage.removeItem("fTextOnPlate");
     localStorage.removeItem("fDateOnPlate");
+    localStorage.removeItem("fBirthdayOnPlate");
     localStorage.removeItem("currentPrice");
     setProductId(product._id ? product._id : "");
     onNavigateNext();
@@ -86,13 +88,7 @@ const CheckAndOrderPage: React.FC<CheckAndOrderPageProps> = ({
         justifyContent={"flex-start"}
         alignItems={"center"}
       >
-        <Grid
-          container
-          item
-          direction={"row"}
-          spacing={1}
-          justifyContent={"center"}
-        >
+        <Grid container direction={"row"} spacing={1} justifyContent={"center"}>
           <Grid
             container
             item
@@ -102,11 +98,17 @@ const CheckAndOrderPage: React.FC<CheckAndOrderPageProps> = ({
             spacing={4}
           >
             <Grid item>
-              <Typography variant="h6">
+              <Typography variant="h6" className="text-center">
                 Tilaajan tiedot (Subscriber Information)
               </Typography>
             </Grid>
-            <Grid item container direction="row" spacing={3}>
+            <Grid
+              item
+              container
+              direction="row"
+              spacing={3}
+              justifyContent={"center"}
+            >
               <Grid item sm={6} md={6}>
                 <TextField
                   label="Nimi (First Name)"
@@ -152,11 +154,17 @@ const CheckAndOrderPage: React.FC<CheckAndOrderPageProps> = ({
             </Grid>
 
             <Grid item>
-              <Typography variant="h6">
+              <Typography variant="h6" className="text-center">
                 Toimitustiedot (Delivery Information)
               </Typography>
             </Grid>
-            <Grid item container direction="row" spacing={3}>
+            <Grid
+              item
+              container
+              direction="row"
+              spacing={3}
+              justifyContent={"center"}
+            >
               <Grid item sm={6} md={6}>
                 <TextField
                   label="Toimitusosoite (Delivery Address)"
@@ -211,19 +219,20 @@ const CheckAndOrderPage: React.FC<CheckAndOrderPageProps> = ({
               items={items}
               textOnPlate={fTextOnPlate}
               dateOnPlate={fDateOnPlate}
+              birthdayOnPlate={fBirthdayOnPlate}
             />
           </Grid>
         </Grid>
-        <Grid item container justifyContent="center">
+        <Grid container justifyContent="center">
           <Button
             type="button"
             variant="contained"
             onClick={onNavigatePrevious}
-            className="!mr-10"
+            className="!mr-5 !mt-10"
           >
             Previous
           </Button>
-          <Button type="submit" variant="contained">
+          <Button type="submit" variant="contained" className="!mr-5 !mt-10">
             Next
           </Button>
         </Grid>

@@ -9,15 +9,17 @@ const PlateItem = ({
   moveItem,
   textOnPlate,
   dateOnPlate,
+  birthdayOnPlate,
 }: {
   item: DraggableItemType;
   moveItem: MoveItemFunction;
   textOnPlate: string;
   dateOnPlate: string;
+  birthdayOnPlate: string;
 }) => {
   const ref = useRef(null);
   const [, drag] = useDrag({
-    type: item.symbol.type === 1 ? "icon" : "plate",
+    type: "symbol",
     item: item,
     end: (item, monitor) => {
       const delta = monitor.getDifferenceFromInitialOffset();
@@ -58,6 +60,8 @@ const PlateItem = ({
         }}
       >
         {textOnPlate}
+        <br />
+        {birthdayOnPlate}
         <br />
         {dateOnPlate}
       </div>

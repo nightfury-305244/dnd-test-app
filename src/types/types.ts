@@ -35,6 +35,7 @@ export interface ProductType {
   ],
   textOnPlate?: string,
   dateOnPlate?: string,
+  birthdayOnPlate?: string,
   price?: string
 }
 
@@ -69,5 +70,6 @@ export interface ProductInfoType {
   droppedSymbols?: DraggableItemType[];
   textOnPlate?: string;
   dateOnPlate?: string;
+  birthdayOnPlate?: string;
   price: number;
 }

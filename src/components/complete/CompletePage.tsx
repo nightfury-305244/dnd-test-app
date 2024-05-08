@@ -41,9 +41,10 @@ const CompletePage: React.FC<CompletePageProps> = ({ onNavigateReturn }) => {
             items={product.symbols ? product.symbols : null}
             textOnPlate={product.textOnPlate ? product.textOnPlate : null}
             dateOnPlate={product.dateOnPlate ? product.dateOnPlate : null}
+            birthdayOnPlate={product.birthdayOnPlate ? product.birthdayOnPlate : null}
           />
         </Grid>
-        <Grid item>
+        <Grid item className="truncate !max-w-full">
           <Link
             to={`${window.location.origin}/product/${productId}`}
             style={{ color: `${theme.palette.primary.main}`, fontSize: "18px" }}

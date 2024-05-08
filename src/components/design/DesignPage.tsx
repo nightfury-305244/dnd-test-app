@@ -3,7 +3,7 @@ import DropArea from "./DropArea";
 import Toolbox from "./Toolbox";
 import { Button, Grid, Typography } from "@mui/material";
 import useLocalStorage from "../../store/useLocalStorage";
-import  { DraggableItemType, StoneType } from "../../types/types";
+import { DraggableItemType, StoneType } from "../../types/types";
 
 interface DesignPageProps {
   onNavigateNext: () => void;
@@ -15,13 +15,22 @@ const DesignPage: React.FC<DesignPageProps> = ({
   onNavigatePrevious,
 }) => {
   const [selectedStone] = useLocalStorage<StoneType>("selectedStone");
-  
+
   const [fTextOnPlate, setFTextOnPlate] =
     useLocalStorage<string>("fTextOnPlate");
   const [fDateOnPlate, setFDateOnPlate] =
     useLocalStorage<string>("fDateOnPlate");
-  const [textOnPlate, setTextOnPlate] = useState<string>(fTextOnPlate ? fTextOnPlate : "");
-  const [dateOnPlate, setDateOnPlate] = useState<string>(fDateOnPlate ? fDateOnPlate : "");
+  const [fBirthdayOnPlate, setFBirthdayOnPlate] =
+    useLocalStorage<string>("fBirthdayOnPlate");
+  const [textOnPlate, setTextOnPlate] = useState<string>(
+    fTextOnPlate ? fTextOnPlate : ""
+  );
+  const [dateOnPlate, setDateOnPlate] = useState<string>(
+    fDateOnPlate ? fDateOnPlate : ""
+  );
+  const [birthdayOnPlate, setBirthdayOnPlate] = useState<string>(
+    fBirthdayOnPlate ? fBirthdayOnPlate : ""
+  );
 
   const [items, setItems] = useLocalStorage<DraggableItemType[]>("items");
 
@@ -33,6 +42,7 @@ const DesignPage: React.FC<DesignPageProps> = ({
     setItems(droppedItems);
     setFTextOnPlate(textOnPlate);
     setFDateOnPlate(dateOnPlate);
+    setFBirthdayOnPlate(birthdayOnPlate);
     onNavigateNext();
   };
   return (
@@ -51,32 +61,32 @@ const DesignPage: React.FC<DesignPageProps> = ({
       </Grid>
       <Grid
         container
-        item
         direction={"row"}
         spacing={1}
         justifyContent={"space-between"}
       >
-        <Grid container item sm={12} md={5} order={{ xs: 2, md: 1 }}>
+        <Grid item sm={12} md={5} order={{ xs: 2, md: 1 }}>
           <Toolbox
             setTextOnPlate={setTextOnPlate}
             textOnPlate={textOnPlate}
             setDateOnPlate={setDateOnPlate}
             dateOnPlate={dateOnPlate}
+            setBirthdayOnPlate={setBirthdayOnPlate}
+            birthdayOnPlate={birthdayOnPlate}
           />
         </Grid>
         <Grid
-          container
           item
           sm={12}
           md={7}
           order={{ xs: 1, md: 2 }}
-          direction={"column"}
           justifyContent={"center"}
         >
           <div className="my-4">
             <DropArea
               textOnPlate={textOnPlate}
               dateOnPlate={dateOnPlate}
+              birthdayOnPlate={birthdayOnPlate}
               droppedItems={droppedItems}
               setDroppedItems={setDroppedItems}
               initialStonePrice={selectedStone ? selectedStone.price : 0}

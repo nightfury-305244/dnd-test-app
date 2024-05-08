@@ -7,6 +7,8 @@ interface ToolboxProps {
   setTextOnPlate: (text: string) => void;
   dateOnPlate: string;
   setDateOnPlate: (text: string) => void;
+  birthdayOnPlate: string;
+  setBirthdayOnPlate: (text: string) => void;
 }
 
 const Toolbox: React.FC<ToolboxProps> = ({
@@ -14,6 +16,8 @@ const Toolbox: React.FC<ToolboxProps> = ({
   textOnPlate,
   setDateOnPlate,
   dateOnPlate,
+  setBirthdayOnPlate,
+  birthdayOnPlate,
 }) => {
   const symbols = useAppSelector((state) => state.symbols.items);
 
@@ -35,7 +39,7 @@ const Toolbox: React.FC<ToolboxProps> = ({
           </Typography>
         </Grid>
         <Grid item>
-          <div className="flex flex-wrap justify-start items-center gap-4">
+          <div className="flex flex-wrap justify-center items-center gap-4">
             {icons.map((icon) => (
               <DraggableItem
                 key={icon._id}
@@ -59,7 +63,7 @@ const Toolbox: React.FC<ToolboxProps> = ({
           </Typography>
         </Grid>
         <Grid item>
-          <div className="flex flex-wrap justify-start items-center gap-4">
+          <div className="flex flex-wrap justify-center items-center gap-4">
             {plates.map((plate) => (
               <DraggableItem
                 key={plate._id}
@@ -83,6 +87,14 @@ const Toolbox: React.FC<ToolboxProps> = ({
             value={textOnPlate}
             onChange={(e) => setTextOnPlate(e.target.value)}
             placeholder="Enter text for the plate"
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            value={birthdayOnPlate}
+            type="date"
+            onChange={(e) => setBirthdayOnPlate(e.target.value)}
+            placeholder="Enter Date for the plate"
           />
         </Grid>
         <Grid item>

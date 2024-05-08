@@ -10,6 +10,7 @@ interface DropAreaProps {
   children: React.ReactNode;
   textOnPlate: string;
   dateOnPlate: string;
+  birthdayOnPlate: string;
   droppedItems: DraggableItemType[];
   setDroppedItems: React.Dispatch<React.SetStateAction<DraggableItemType[]>>;
   initialStonePrice: number;
@@ -19,6 +20,7 @@ const DropArea: React.FC<DropAreaProps> = ({
   children,
   textOnPlate,
   dateOnPlate,
+  birthdayOnPlate,
   droppedItems,
   setDroppedItems,
   initialStonePrice,
@@ -126,6 +128,7 @@ const DropArea: React.FC<DropAreaProps> = ({
                 moveItem={moveItem}
                 textOnPlate={textOnPlate}
                 dateOnPlate={dateOnPlate}
+                birthdayOnPlate={birthdayOnPlate}
               />
             ) : (
               <IconItem key={index} item={item} moveItem={moveItem} />

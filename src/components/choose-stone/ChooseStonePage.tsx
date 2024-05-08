@@ -41,7 +41,7 @@ const ChooseStonePage: React.FC<ChooseStonePageProps> = ({
           Choose a Gravestone
         </Typography>
       </Grid>
-      <Grid container item justifyContent={"center"} spacing={3}>
+      <Grid container justifyContent={"center"} spacing={3}>
         {stones.map((stone) => (
           <Grid item key={stone._id}>
             <GravestoneCard

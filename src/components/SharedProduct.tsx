@@ -28,6 +28,7 @@ const SharedProduct: React.FC = () => {
           items={product.symbols ? product.symbols : null}
           textOnPlate={product.textOnPlate ? product.textOnPlate : null}
           dateOnPlate={product.dateOnPlate ? product.dateOnPlate : null}
+          birthdayOnPlate={product.birthdayOnPlate ? product.birthdayOnPlate : null}
         />
       </Grid>
     </Grid>
