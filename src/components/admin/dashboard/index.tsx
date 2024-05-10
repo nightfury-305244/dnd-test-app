@@ -13,13 +13,15 @@ import { useAppDispatch } from "../../../hooks";
 import { signIn } from "../../../features/auth/authActions";
 import { useNavigate } from "react-router-dom";
 import { unwrapResult } from "@reduxjs/toolkit";
+import { useAuth } from "../../../AuthContext";
 
 const defaultTheme = createTheme();
 
 const AdminDashboardPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
+  const { login } = useAuth();
+  
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -28,6 +30,7 @@ const AdminDashboardPage: React.FC = () => {
     try {
       const signInResult = await dispatch(signIn({ email, password }));
       unwrapResult(signInResult);
+      login();
       navigate("/admin/stone");
     } catch (error: any) {
       console.error("Login failed:", error);

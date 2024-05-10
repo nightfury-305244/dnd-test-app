@@ -10,12 +10,20 @@ interface ProgressBarProps {
 const ProgressBar: React.FC<ProgressBarProps> = ({ step }) => {
   const location = useLocation();
 
-  const isAdminRoute = location.pathname.startsWith("/admin");
+  const isDesignRoute = location.pathname.startsWith("/design");
 
   const progressPercentage = (step / 3) * 100;
 
   return (
-    <Box sx={{ width: "80%", mt: 10, mb: 3, mx: "auto", visibility: `${isAdminRoute ? 'hidden' : 'visible'}` }}>
+    <Box
+      sx={{
+        width: "80%",
+        mt: 10,
+        mb: 3,
+        mx: "auto",
+        visibility: `${isDesignRoute ? "visible" : "hidden"}`,
+      }}
+    >
       <LinearProgress variant="determinate" value={progressPercentage} />
     </Box>
   );

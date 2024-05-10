@@ -20,25 +20,25 @@ function PageComponent({ onStepChange }: PageComponentProps) {
   }, [step, onStepChange]);
 
   const nextStep = () => {
-    if (step === "select") navigate("/design");
-    else if (step === "design") navigate("/order");
+    if (step === "select") navigate("/design/decorate");
+    else if (step === "decorate") navigate("/design/order");
     else if (step === "order") {
       localStorage.removeItem("selectedStone");
       localStorage.removeItem("items");
-      navigate("/complete");
+      navigate("/design/complete");
     }
   };
 
   const prevStep = () => {
-    if (step === "design") navigate("/select");
-    else if (step === "order") navigate("/design");
-    else if (step === "complete") navigate("/order");
+    if (step === "decorate") navigate("/design/select");
+    else if (step === "order") navigate("/design/decorate");
+    else if (step === "complete") navigate("/design/order");
   };
 
   switch (step) {
     case "select":
       return <ChooseStonePage onNavigateNext={nextStep} />;
-    case "design":
+    case "decorate":
       return (
         <DesignPage onNavigateNext={nextStep} onNavigatePrevious={prevStep} />
       );
@@ -52,7 +52,7 @@ function PageComponent({ onStepChange }: PageComponentProps) {
     case "complete":
       return <CompletePage onNavigateReturn={() => navigate("/")} />;
     default:
-      return <Navigate to="/select" replace />;
+      return <Navigate to="design/select" replace />;
   }
 }
 

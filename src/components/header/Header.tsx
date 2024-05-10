@@ -26,7 +26,7 @@ export default function Header() {
               <MenuIcon />
             </IconButton>
           </Link>
-          {isAdminRoute && (
+          {isAdminRoute ? (
             <>
               <Link
                 to="/admin/stone"
@@ -50,15 +50,32 @@ export default function Header() {
                 </Typography>
               </Link>
             </>
+          ) : (
+            <>
+              <Link
+                to="design"
+                style={{
+                  textDecoration: "none",
+                  color: "inherit",
+                  marginRight: 2,
+                }}
+                className="!mr-4"
+              >
+                <Typography variant="body1" component="div">
+                  DESIGN
+                </Typography>
+              </Link>
+              <Link
+                to="/faq"
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                <Typography variant="body1" component="div">
+                  FAQ
+                </Typography>
+              </Link>
+            </>
           )}
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, textAlign: "center" }}
-          >
-            Design Grave Stone
-          </Typography>
-          {isAdminRoute && (
+          {isAdminRoute ? (
             <>
               <Link
                 to="/admin/stone"
@@ -84,6 +101,35 @@ export default function Header() {
               >
                 <Typography variant="body1" component="div">
                   Symbols
+                </Typography>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/select"
+                style={{
+                  textDecoration: "none",
+                  color: "inherit",
+                  marginRight: 2,
+                  visibility: "hidden",
+                }}
+                className="!mr-4"
+              >
+                <Typography variant="body1" component="div">
+                  DESIGN
+                </Typography>
+              </Link>
+              <Link
+                to="/faq"
+                style={{
+                  textDecoration: "none",
+                  color: "inherit",
+                  visibility: "hidden",
+                }}
+              >
+                <Typography variant="body1" component="div">
+                  FAQ
                 </Typography>
               </Link>
             </>

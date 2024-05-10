@@ -4,8 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { useEffect } from "react";
 import { getProduct } from "../../features/product/productActions";
 import useLocalStorage from "../../store/useLocalStorage";
-import { Link } from "react-router-dom";
-import theme from "../../theme";
+import ShareButton from "../../shared-components/ShareButton";
 
 interface CompletePageProps {
   onNavigateReturn: () => void;
@@ -41,23 +40,17 @@ const CompletePage: React.FC<CompletePageProps> = ({ onNavigateReturn }) => {
             items={product.symbols ? product.symbols : null}
             textOnPlate={product.textOnPlate ? product.textOnPlate : null}
             dateOnPlate={product.dateOnPlate ? product.dateOnPlate : null}
-            birthdayOnPlate={product.birthdayOnPlate ? product.birthdayOnPlate : null}
+            birthdayOnPlate={
+              product.birthdayOnPlate ? product.birthdayOnPlate : null
+            }
           />
         </Grid>
-        <Grid item className="truncate !max-w-full">
-          <Link
-            to={`${window.location.origin}/product/${productId}`}
-            style={{ color: `${theme.palette.primary.main}`, fontSize: "18px" }}
-          >
-            {`${window.location.origin}/product/${productId}`}
-          </Link>
+        <Grid item>
+          <ShareButton
+            shareUrl={window.location.origin + "/product/" + productId}
+          />
         </Grid>
       </Grid>
-      {/* <Grid item>
-        <Typography variant="h2" align="center">
-          Congratulations!
-        </Typography>
-      </Grid> */}
       <Button
         variant="contained"
         onClick={onNavigateReturn}
