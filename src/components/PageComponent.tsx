@@ -1,9 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, lazy } from "react";
 import { useParams, useNavigate, Navigate } from "react-router-dom";
-import ChooseStonePage from "./choose-stone/ChooseStonePage";
-import DesignPage from "./design/DesignPage";
-import CheckAndOrderPage from "./check-and-order/CheckAndOrderPage";
-import CompletePage from "./complete/CompletePage";
+
+const ChooseStonePage = lazy(() => import("./choose-stone/ChooseStonePage"));
+const DesignPage = lazy(() => import("./design/DesignPage"));
+const CheckAndOrderPage = lazy(
+  () => import("./check-and-order/CheckAndOrderPage")
+);
+const CompletePage = lazy(() => import("./complete/CompletePage"));
 
 interface PageComponentProps {
   onStepChange: (stepName: string) => void;
