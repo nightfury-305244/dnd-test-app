@@ -3,7 +3,7 @@ import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
-import { Grid } from "@mui/material";
+import { CircularProgress, Grid } from "@mui/material";
 import { getFullImageUrl } from "../../../utils/utils";
 
 interface GravestoneCardProps {
@@ -39,9 +39,17 @@ const GravestoneCard: React.FC<GravestoneCardProps> = ({
   description,
 }) => {
   const [currentUrl, setCurrentUrl] = React.useState(url.frontUrl);
+  const [isLoading, setIsLoading] = React.useState(false);
 
-  const handleSetImage = (url: string) => {
-    setCurrentUrl(url);
+  const handleSetImage = (newUrl: string) => {
+    if (currentUrl !== newUrl) {
+      setIsLoading(true);
+      setCurrentUrl(newUrl);
+    }
+  };
+
+  const handleImageLoaded = () => {
+    setIsLoading(false);
   };
 
   const cardStyles = {
@@ -67,11 +75,23 @@ const GravestoneCard: React.FC<GravestoneCardProps> = ({
       </Grid>
       <Grid item>
         <ImageContainer>
+          {isLoading && (
+            <CircularProgress
+              size={32}
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+            />
+          )}
           <img
             className="mx-auto"
             src={getFullImageUrl(currentUrl)}
             alt={`${title}`}
             style={{ width: "auto", maxHeight: "300px" }}
+            onLoad={handleImageLoaded}
           />
         </ImageContainer>
       </Grid>
@@ -96,12 +116,6 @@ const GravestoneCard: React.FC<GravestoneCardProps> = ({
       <Grid item>
         <Typography className="!mb-4">{description}</Typography>
       </Grid>
-
-      {/* <Grid item>
-        <ButtonGroup variant="contained">
-          <Button onClick={onEdit}>Edit</Button>
-        </ButtonGroup>
-      </Grid> */}
     </Grid>
   );
 };
