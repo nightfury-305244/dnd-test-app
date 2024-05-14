@@ -56,9 +56,9 @@ const settings = {
 const DashboardPage: React.FC = () => {
   const navigate = useNavigate();
   const images: Image[] = [
-    { id: 1, src: "/sample1.jpg", title: "Gravestone 1" },
-    { id: 2, src: "/sample2.jpg", title: "Gravestone 2" },
-    { id: 3, src: "/sample3.jpg", title: "Gravestone 3" },
+    { id: 1, src: "/sample1.webp", title: "Gravestone 1" },
+    { id: 2, src: "/sample2.webp", title: "Gravestone 2" },
+    { id: 3, src: "/sample3.webp", title: "Gravestone 3" },
   ];
 
   return (
