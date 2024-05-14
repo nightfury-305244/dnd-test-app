@@ -20,6 +20,10 @@ const CompletePage: React.FC<CompletePageProps> = ({ onNavigateReturn }) => {
     dispatch(getProduct(productId ? productId : ""));
   }, [productId]);
 
+  const onReturn = () => {
+    localStorage.removeItem("productId");
+    onNavigateReturn();
+  }
   return (
     <Grid
       container
@@ -53,7 +57,7 @@ const CompletePage: React.FC<CompletePageProps> = ({ onNavigateReturn }) => {
       </Grid>
       <Button
         variant="contained"
-        onClick={onNavigateReturn}
+        onClick={onReturn}
         className="!mt-10 !mx-auto"
       >
         Return

@@ -1,12 +1,13 @@
 import { Button, Grid, TextField, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
-import React from "react";
+import React, { useEffect } from "react";
 import Product from "../Product";
 import { useAppDispatch } from "../../store/store";
 import { createOrder } from "../../features/order/orderActions";
 import useLocalStorage from "../../store/useLocalStorage";
 import { DraggableItemType, StoneType } from "../../types/types";
 import { createProduct } from "../../features/product/productActions";
+import ShareButton from "../../shared-components/ShareButton";
 
 interface FormValues {
   firstName: string;
@@ -41,19 +42,42 @@ const CheckAndOrderPage: React.FC<CheckAndOrderPageProps> = ({
   const [fTextOnPlate] = useLocalStorage<string>("fTextOnPlate");
   const [fDateOnPlate] = useLocalStorage<string>("fDateOnPlate");
   const [fBirthdayOnPlate] = useLocalStorage<string>("fBirthdayOnPlate");
-  const [_productId, setProductId] = useLocalStorage<string>("productId");
+  const [productId, setProductId] = useLocalStorage<string>("productId");
+
+  useEffect(() => {
+    if (!productId) {
+      const productInfo = {
+        stoneId: selectedStone ? selectedStone._id : "",
+        droppedSymbols: items ? items : [],
+        textOnPlate: fTextOnPlate ? fTextOnPlate : "",
+        dateOnPlate: fDateOnPlate ? fDateOnPlate : "",
+        birthdayOnPlate: fBirthdayOnPlate ? fBirthdayOnPlate : "",
+        price: currentPrice ? currentPrice : 0,
+      };
+      const createProductAsync = async () => {
+        const resultAction = await dispatch(
+          createProduct(productInfo)
+        ).unwrap();
+        if (resultAction && resultAction._id) {
+          setProductId(resultAction._id);
+        }
+      };
+      createProductAsync();
+    }
+  }, [
+    dispatch,
+    selectedStone,
+    items,
+    fTextOnPlate,
+    fDateOnPlate,
+    fBirthdayOnPlate,
+    currentPrice,
+    productId,
+    setProductId,
+  ]);
 
   const onSubmit = async (data: FormValues) => {
-    const productInfo = {
-      stoneId: selectedStone ? selectedStone._id : "",
-      droppedSymbols: items ? items : [],
-      textOnPlate: fTextOnPlate ? fTextOnPlate : "",
-      dateOnPlate: fDateOnPlate ? fDateOnPlate : "",
-      birthdayOnPlate: fBirthdayOnPlate ? fBirthdayOnPlate : "",
-      price: currentPrice ? currentPrice : 0,
-    };
-    const product = await dispatch(createProduct(productInfo)).unwrap();
-
+    if (!productId) return;
     const orderData = {
       subscriberInfo: {
         firstName: data.firstName,
@@ -67,15 +91,19 @@ const CheckAndOrderPage: React.FC<CheckAndOrderPageProps> = ({
         deliveryNumber: data.deliveryNumber,
         deliveryTime: data.deliveryTime,
       },
-      productId: product._id,
+      productId: productId,
     };
     dispatch(createOrder(orderData));
     localStorage.removeItem("fTextOnPlate");
     localStorage.removeItem("fDateOnPlate");
     localStorage.removeItem("fBirthdayOnPlate");
     localStorage.removeItem("currentPrice");
-    setProductId(product._id ? product._id : "");
     onNavigateNext();
+  };
+
+  const onPrevious = () => {
+    localStorage.removeItem("productId");
+    onNavigatePrevious();
   };
 
   return (
@@ -221,13 +249,18 @@ const CheckAndOrderPage: React.FC<CheckAndOrderPageProps> = ({
               dateOnPlate={fDateOnPlate}
               birthdayOnPlate={fBirthdayOnPlate}
             />
+            <Grid item>
+              <ShareButton
+                shareUrl={window.location.origin + "/product/" + productId}
+              />
+            </Grid>
           </Grid>
         </Grid>
         <Grid container justifyContent="center">
           <Button
             type="button"
             variant="contained"
-            onClick={onNavigatePrevious}
+            onClick={onPrevious}
             className="!mr-5 !mt-10"
           >
             Previous
