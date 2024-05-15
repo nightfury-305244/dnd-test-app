@@ -33,7 +33,13 @@ const ShareButton: React.FC<ShareButtonProps> = ({ shareUrl }) => {
   const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareUrl)}`;
 
   return (
-    <Box display="flex" gap={2}>
+    <Box 
+      display="flex" 
+      flexDirection={{ xs: "column", sm: "row" }} 
+      gap={2}
+      alignItems={{ xs: "stretch", sm: "center" }}
+      justifyContent={{ xs: "center", sm: "flex-start" }}
+    >
       <Tooltip title="Share via WhatsApp">
         <Button
           component="a"
@@ -43,6 +49,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({ shareUrl }) => {
           rel="noopener noreferrer"
           color="success"
           startIcon={<WhatsAppIcon />}
+          sx={{ width: { xs: "100%", sm: "auto" } }}
         >
           WhatsApp
         </Button>
@@ -53,6 +60,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({ shareUrl }) => {
           color="primary"
           size="large"
           startIcon={<ShareIcon />}
+          sx={{ width: { xs: "100%", sm: "auto" } }}
         >
           Share Link
         </Button>
